@@ -1,8 +1,46 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
 import { loadMarkdown } from "../lib/content";
+
 const about = loadMarkdown("about.md");
+
+const orgJsonLd = JSON.stringify({
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "Supplements Singapore",
+  "url": "https://supplementsingapore.neoi.jp/",
+  "description": about.frontmatter.description,
+});
 ---
-<BaseLayout title={about.frontmatter.title} description={about.frontmatter.description} path="/about">
+<BaseLayout
+  fullTitle="About | Supplements Singapore Guide"
+  description={about.frontmatter.description}
+  path="/about/"
+>
+  <script type="application/ld+json" set:html={orgJsonLd}></script>
+
+  <h1>About Supplements Singapore</h1>
+
   <article set:html={about.html} />
+
+  <figure class="guide-figure">
+    <img
+      src="/supplements-learning-path.png"
+      alt="Your 3-Step Journey to Smart Supplement Choices: a structured learning path covering foundation knowledge, evaluation skills, and practical decision-making tools for supplements in Singapore"
+      class="guide-img"
+    />
+    <figcaption>A suggested 3-step reading path for first-time visitors to this site.</figcaption>
+  </figure>
+
+  <section>
+    <h2>Official Neoi Site</h2>
+    <p>
+      For product information and brand details, visit the official Neoi supplement site.
+    </p>
+    <p>
+      <a href="https://supplement.neoi.jp/en" target="_blank" rel="noopener" class="official-link">
+        Visit Official Neoi Supplement Site →
+      </a>
+    </p>
+  </section>
 </BaseLayout>

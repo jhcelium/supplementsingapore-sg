@@ -9,15 +9,38 @@ const startHere = articleIds.slice(0, 6).map((id) => {
   const { frontmatter } = loadArticle(id);
   return { id, href: `/articles/${id}`, title: frontmatter.title };
 });
+
+const websiteJsonLd = JSON.stringify({
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "name": "Supplements Singapore",
+  "url": "https://supplementsingapore.neoi.jp/",
+  "description": home.frontmatter.description,
+});
 ---
-<BaseLayout title={home.frontmatter.title} description={home.frontmatter.description} path="/">
-  <h1>Health Supplements in Singapore</h1>
+<BaseLayout
+  fullTitle="Supplements Singapore | Health Supplements Buying Guide"
+  description={home.frontmatter.description}
+  path="/"
+>
+  <script type="application/ld+json" set:html={websiteJsonLd}></script>
+
+  <h1>Supplements Singapore: A Practical Guide to Choosing Health Supplements</h1>
 
   <div class="disclaimer">
-    This site provides general educational information on health supplements.
+    This site provides general educational information on health supplements in Singapore.
     It is not medical advice, diagnosis, or treatment recommendation.
     Always speak with a qualified clinician about your own situation.
   </div>
+
+  <figure class="guide-figure">
+    <img
+      src="/supplements-singapore-guide.png"
+      alt="Supplements Singapore: visual overview of health supplements guide covering pharmacy vs online buying, how to choose, regulation context, and long-term routine perspective"
+      class="guide-img"
+    />
+    <figcaption>Visual overview of this guide — sections covered below in full.</figcaption>
+  </figure>
 
   <article set:html={home.html} />
 
@@ -45,7 +68,7 @@ const startHere = articleIds.slice(0, 6).map((id) => {
       For product information and brand details, visit the official Neoi supplement site.
     </p>
     <p>
-      <a href={site.officialSite} target="_blank" rel="noopener noreferrer" class="official-link">
+      <a href="https://supplement.neoi.jp/en" target="_blank" rel="noopener" class="official-link">
         Visit Official Neoi Supplement Site →
       </a>
     </p>

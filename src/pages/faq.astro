@@ -4,20 +4,24 @@ import { loadMarkdown } from "../lib/content";
 
 const loaded = loadMarkdown("faq.md");
 const { frontmatter, html } = loaded;
-const faqItems = frontmatter.faq ?? [];
+const faqItems: Array<{ q: string; a: string }> = frontmatter.faq ?? [];
 
 const faqJsonLd = JSON.stringify({
   "@context": "https://schema.org",
   "@type": "FAQPage",
-  mainEntity: faqItems.map((item) => ({
+  mainEntity: faqItems.slice(0, 4).map((item) => ({
     "@type": "Question",
     name: item.q,
     acceptedAnswer: { "@type": "Answer", text: item.a },
   })),
 });
 ---
-<BaseLayout title={frontmatter.title} description={frontmatter.description} path="/faq">
-  <h1>{frontmatter.title}</h1>
+<BaseLayout
+  fullTitle="FAQ | Supplements Singapore"
+  description={frontmatter.description}
+  path="/faq/"
+>
+  <h1>Supplements Singapore FAQ</h1>
 
   <div class="disclaimer">
     General educational information only. Not medical advice.
@@ -27,4 +31,25 @@ const faqJsonLd = JSON.stringify({
   <article set:html={html} />
 
   <script type="application/ld+json" set:html={faqJsonLd}></script>
+
+  <figure class="guide-figure">
+    <img
+      src="/supplements-knowledge-check.png"
+      alt="Knowledge Check: 3-step quiz to test your understanding of health supplements in Singapore — covering foundation knowledge, evaluation skills, and practical application"
+      class="guide-img"
+    />
+    <figcaption>Knowledge check: use these quizzes to verify your understanding before making supplement decisions.</figcaption>
+  </figure>
+
+  <section>
+    <h2>Official Neoi Site</h2>
+    <p>
+      For product information and brand details, visit the official Neoi supplement site.
+    </p>
+    <p>
+      <a href="https://supplement.neoi.jp/en" target="_blank" rel="noopener" class="official-link">
+        Visit Official Neoi Supplement Site →
+      </a>
+    </p>
+  </section>
 </BaseLayout>

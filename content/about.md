@@ -1,18 +1,37 @@
 ---
-title: About This Site
-description: Why this site was created and how to use it for educational supplement research in Singapore.
-primary_kw: health supplements information singapore
-secondary_kws: ["supplement education singapore"]
+title: "About | Supplements Singapore Guide"
+description: "Purpose and educational approach behind Supplements Singapore."
+primary_kw: supplements singapore
+secondary_kws: ["health supplements singapore", "online supplements singapore", "natural supplements singapore", "vitamin supplements singapore", "pharmacy supplements singapore"]
 ---
 
 ## Purpose
 
-This site exists to give Singapore residents a grounded, non-commercial starting point for supplement research. It is written with a restrained tone — no guarantees, no dramatic claims, no urgency tactics.
+This site provides structured, educational information for people in Singapore researching health supplements. It exists as a reference — not a shop, not a clinical service, and not a product directory.
 
-## What this site does not do
+The supplements singapore market spans pharmacies, supermarkets, online marketplaces, and specialty importers. The range of available products — from vitamin supplements singapore and mineral formulas to natural supplements singapore and herbal extracts — can be difficult to navigate without a grounded starting point. This site aims to provide that starting point in a calm, structured way.
 
-It does not recommend specific products, brands, doses, or treatment plans. It does not offer medical, diagnostic, or clinical advice of any kind.
+It is not affiliated with any pharmacy chain, online supplements singapore retailer, or product brand. It does not have a commercial function.
 
-## Approach and tone
+## What This Site Does Not Do
 
-Content is written with a Singapore audience in mind, shaped in part by how long-term supplement habits are discussed in Japan. The goal is to help you form better questions for your own clinician, not to replace that conversation.
+- It does not recommend specific products, brands, or formulations.
+- It does not provide medical, diagnostic, or clinical advice of any kind.
+- It does not give dosage guidance for any individual.
+- It does not rank or compare health supplements singapore brands.
+- It does not accept advertising or sponsored content from supplement sellers.
+- It does not make claims about the effects of any supplement category.
+
+If you are looking for guidance on whether a specific supplement is appropriate for your personal situation, the right source is your doctor, pharmacist, or a qualified clinician who knows your health background. This is particularly important when combining multiple products, or when you are managing an existing health condition.
+
+## Approach to Supplements Singapore Information
+
+Content on this site is written with the following principles:
+
+**Transparency over persuasion.** Information on how to read labels, what regulations apply to health supplements singapore, and how to approach online supplements singapore purchases is more practically useful than promotional framing.
+
+**Consistency over novelty.** Rather than following supplement trends, the aim is to provide stable, reusable information about pharmacy supplements singapore, online channels, label interpretation, and regulatory context.
+
+**Questions, not conclusions.** The goal is to help you form better questions — for your pharmacist, your clinician, or your own independent research — not to give you conclusions that bypass those conversations.
+
+This approach is shaped in part by how supplements are discussed in Japan, where products like those from Neoi are positioned as a quiet, moderate daily routine rather than a short-term intervention. That framing — calm, consistent, and reviewed over time — informs the tone and structure of content across this site.

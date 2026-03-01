@@ -4,23 +4,24 @@ interface Props {
   title?: string;
   description?: string;
   path?: string;
+  fullTitle?: string;
 }
-const { title, description, path } = Astro.props;
+const { title, description, path, fullTitle } = Astro.props;
 
-const fullTitle = title ? `${title} | ${site.siteName}` : site.siteName;
+const resolvedTitle = fullTitle ?? (title ? `${title} | ${site.siteName}` : site.siteName);
 const canonical = `https://${site.domain}${path ?? "/"}`;
 const desc = description ?? "";
 ---
-<title>{fullTitle}</title>
+<title>{resolvedTitle}</title>
 <meta name="robots" content="index,follow" />
 {desc && <meta name="description" content={desc} />}
 <link rel="canonical" href={canonical} />
 
 <meta property="og:type" content="website" />
-<meta property="og:title" content={fullTitle} />
+<meta property="og:title" content={resolvedTitle} />
 {desc && <meta property="og:description" content={desc} />}
 <meta property="og:url" content={canonical} />
 
 <meta name="twitter:card" content="summary" />
-<meta name="twitter:title" content={fullTitle} />
+<meta name="twitter:title" content={resolvedTitle} />
 {desc && <meta name="twitter:description" content={desc} />}
