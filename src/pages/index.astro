@@ -1,31 +1,26 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
-import { loadMarkdown, loadArticle, listArticleIds } from "../lib/content";
+import { loadMarkdown } from "../lib/content";
 import site from "../../data/site.json";
 
 const home = loadMarkdown("home.md");
-const articleIds = listArticleIds();
-const startHere = articleIds.slice(0, 6).map((id) => {
-  const { frontmatter } = loadArticle(id);
-  return { id, href: `/articles/${id}`, title: frontmatter.title };
-});
 
 const websiteJsonLd = JSON.stringify({
   "@context": "https://schema.org",
   "@type": "WebSite",
   "name": "Supplements Singapore",
   "url": "https://supplementsingapore.neoi.jp/",
-  "description": home.frontmatter.description,
+  "description": "A structured guide to supplements in Singapore: health supplements, pharmacy vs online buying, label transparency, and regulation context.",
 });
 ---
 <BaseLayout
-  fullTitle="Supplements Singapore | Health Supplements Buying Guide"
-  description={home.frontmatter.description}
+  fullTitle="Supplements Singapore | Practical Guide to Health Supplements"
+  description="A structured guide to supplements in Singapore: health supplements, pharmacy vs online buying, label transparency, and regulation context."
   path="/"
 >
   <script type="application/ld+json" set:html={websiteJsonLd}></script>
 
-  <h1>Supplements Singapore: A Practical Guide to Choosing Health Supplements</h1>
+  <h1>Supplements Singapore: A Practical Guide to Health Supplements</h1>
 
   <div class="disclaimer">
     This site provides general educational information on health supplements in Singapore.
@@ -36,7 +31,7 @@ const websiteJsonLd = JSON.stringify({
   <figure class="guide-figure">
     <img
       src="/supplements-singapore-guide.png"
-      alt="Supplements Singapore: visual overview of health supplements guide covering pharmacy vs online buying, how to choose, regulation context, and long-term routine perspective"
+      alt="Supplements Singapore: visual overview covering pharmacy vs online buying, label comparison, regulation context, and long-term routine perspective"
       class="guide-img"
     />
     <figcaption>Visual overview of this guide — sections covered below in full.</figcaption>
@@ -46,10 +41,12 @@ const websiteJsonLd = JSON.stringify({
 
   <section>
     <h2>Start here</h2>
+    <p>These specialist guides go deeper on specific topics covered in this overview.</p>
     <ul>
-      {startHere.map((item) => (
-        <li><a href={item.href}>{item.title}</a></li>
-      ))}
+      <li><a href="https://healthsupplements.neoi.jp/">Health supplements guidance</a> — understanding supplement categories and label conventions</li>
+      <li><a href="https://supplementshop.neoi.jp/">Supplement shopping framework</a> — a structured approach to evaluating sellers and products</li>
+      <li><a href="https://onlinesupplements.neoi.jp/">Online buying verification</a> — how to assess online listings before purchasing</li>
+      <li><a href="https://naturalsupplements.neoi.jp/">Natural label clarity</a> — what "natural" means and does not mean on supplement labels</li>
     </ul>
   </section>
 
@@ -63,7 +60,7 @@ const websiteJsonLd = JSON.stringify({
   </section>
 
   <section>
-    <h2>Official Neoi Site</h2>
+    <h2>Official Neoi Supplement Site</h2>
     <p>
       For product information and brand details, visit the official Neoi supplement site.
     </p>

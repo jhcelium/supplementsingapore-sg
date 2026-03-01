@@ -9,12 +9,11 @@ const orgJsonLd = JSON.stringify({
   "@type": "Organization",
   "name": "Supplements Singapore",
   "url": "https://supplementsingapore.neoi.jp/",
-  "description": about.frontmatter.description,
 });
 ---
 <BaseLayout
   fullTitle="About | Supplements Singapore Guide"
-  description={about.frontmatter.description}
+  description="Purpose and approach behind Supplements Singapore: non-commercial, label-focused education."
   path="/about/"
 >
   <script type="application/ld+json" set:html={orgJsonLd}></script>
@@ -22,6 +21,29 @@ const orgJsonLd = JSON.stringify({
   <h1>About Supplements Singapore</h1>
 
   <article set:html={about.html} />
+
+  <section>
+    <h2>Related specialist guides</h2>
+    <p>This site links to a set of specialist guides that go deeper on specific areas of the supplements singapore topic.</p>
+    <ul>
+      <li>
+        <a href="https://healthsupplements.neoi.jp/">Health supplements guidance</a> —
+        a closer look at supplement categories, ingredient conventions, and how to read health supplement labels in Singapore.
+      </li>
+      <li>
+        <a href="https://supplementshop.neoi.jp/">Supplement shopping framework</a> —
+        a structured process for evaluating sellers and products before you buy supplements singapore, whether in-store or online.
+      </li>
+      <li>
+        <a href="https://onlinesupplements.neoi.jp/">Online buying verification</a> —
+        how to assess supplements singapore online listings: seller credibility, product page completeness, and HSA label alignment.
+      </li>
+      <li>
+        <a href="https://naturalsupplements.neoi.jp/">Natural label clarity</a> —
+        what "natural" means and does not mean on supplement labels, and how to evaluate natural supplements singapore products by ingredient rather than descriptor.
+      </li>
+    </ul>
+  </section>
 
   <figure class="guide-figure">
     <img
@@ -33,7 +55,7 @@ const orgJsonLd = JSON.stringify({
   </figure>
 
   <section>
-    <h2>Official Neoi Site</h2>
+    <h2>Official Neoi Supplement Site</h2>
     <p>
       For product information and brand details, visit the official Neoi supplement site.
     </p>

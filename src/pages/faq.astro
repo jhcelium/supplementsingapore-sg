@@ -18,19 +18,19 @@ const faqJsonLd = JSON.stringify({
 ---
 <BaseLayout
   fullTitle="FAQ | Supplements Singapore"
-  description={frontmatter.description}
+  description="Common questions about buying and understanding supplements in Singapore."
   path="/faq/"
 >
+  <script type="application/ld+json" set:html={faqJsonLd}></script>
+
   <h1>Supplements Singapore FAQ</h1>
 
   <div class="disclaimer">
     General educational information only. Not medical advice.
-    If pregnant, nursing, or on medication, consult a qualified clinician.
+    If you have questions about your personal situation, consult a qualified clinician or pharmacist.
   </div>
 
   <article set:html={html} />
-
-  <script type="application/ld+json" set:html={faqJsonLd}></script>
 
   <figure class="guide-figure">
     <img
@@ -42,7 +42,18 @@ const faqJsonLd = JSON.stringify({
   </figure>
 
   <section>
-    <h2>Official Neoi Site</h2>
+    <h2>Specialist guides</h2>
+    <p>For more depth on specific topics raised in these questions:</p>
+    <ul>
+      <li><a href="https://healthsupplements.neoi.jp/">Health supplements guidance</a> — supplement categories and label conventions</li>
+      <li><a href="https://supplementshop.neoi.jp/">Supplement shopping framework</a> — structured evaluation before purchase</li>
+      <li><a href="https://onlinesupplements.neoi.jp/">Online buying verification</a> — assessing supplements singapore online listings</li>
+      <li><a href="https://naturalsupplements.neoi.jp/">Natural label clarity</a> — understanding "natural" on supplement labels</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>Official Neoi Supplement Site</h2>
     <p>
       For product information and brand details, visit the official Neoi supplement site.
     </p>
