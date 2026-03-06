@@ -1,0 +1,17 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import RegulatoryLandscapeSingapore, { seoConfig } from "../components/RegulatoryLandscapeSingapore";
+
+const webPageJsonLd = JSON.stringify(seoConfig.jsonLd);
+---
+<BaseLayout
+  fullTitle={seoConfig.title}
+  description={seoConfig.description}
+  path="/regulatory-landscape-singapore/"
+>
+  <script type="application/ld+json" set:html={webPageJsonLd}></script>
+
+  <h1>Supplements Singapore: Regulatory Landscape</h1>
+
+  <RegulatoryLandscapeSingapore />
+</BaseLayout>
