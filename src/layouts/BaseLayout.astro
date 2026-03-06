@@ -1,6 +1,8 @@
 ---
 import Seo from "../components/Seo.astro";
 import site from "../../data/site.json";
+import "../styles/editorial.css";
+
 interface Props {
   title?: string;
   description?: string;
@@ -15,95 +17,10 @@ const { title, description, path, fullTitle } = Astro.props;
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <Seo title={title} description={description} path={path} fullTitle={fullTitle} />
-    <style>
-      :root {
-        font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      }
-      body {
-        margin: 0;
-        background: #fff;
-        color: #111;
-      }
-      main {
-        max-width: 760px;
-        margin: 0 auto;
-        padding: 24px 16px 48px;
-      }
-      header {
-        border-bottom: 1px solid #e5e5e5;
-        padding: 12px 16px;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-      }
-      .header-logo img {
-        height: 40px;
-        width: auto;
-        display: block;
-      }
-      footer {
-        border-top: 1px solid #e5e5e5;
-        padding: 16px;
-        font-size: 13px;
-        color: #555;
-        margin-top: 32px;
-      }
-      nav a {
-        margin-right: 12px;
-        font-size: 14px;
-        color: #0b63ce;
-        text-decoration: none;
-      }
-      nav a:hover {
-        text-decoration: underline;
-      }
-      a {
-        color: #0b63ce;
-      }
-      h1,
-      h2,
-      h3 {
-        font-weight: 600;
-      }
-      .disclaimer {
-        border: 1px solid #ddd;
-        background: #fafafa;
-        padding: 10px 12px;
-        font-size: 13px;
-        margin: 12px 0 24px;
-      }
-      .official-link {
-        display: inline-block;
-        border: 1px solid #0b63ce;
-        padding: 6px 10px;
-        font-size: 14px;
-        text-decoration: none;
-      }
-      .official-link:hover {
-        background: #f4f8ff;
-      }
-      .guide-figure {
-        margin: 0 0 32px;
-        padding: 0;
-      }
-      .guide-img {
-        width: 100%;
-        height: auto;
-        display: block;
-        border: 1px solid #e5e5e5;
-        border-radius: 4px;
-      }
-      .guide-figure figcaption {
-        font-size: 12px;
-        color: #777;
-        margin-top: 6px;
-        text-align: center;
-      }
-    </style>
   </head>
   <body>
-    <header>
-      <nav>
+    <header class="site-header">
+      <nav class="site-nav">
         <a href="/">Home</a>
         <a href="/about">About</a>
         <a href="/faq">FAQ</a>
@@ -112,10 +29,14 @@ const { title, description, path, fullTitle } = Astro.props;
         <img src="/neoi-logo.png" alt="supplement.neoi.jp" />
       </a>
     </header>
-    <main><slot /></main>
-    <footer>
+
+    <main class="site-main">
+      <slot />
+    </main>
+
+    <footer class="site-footer">
       <div>{site.siteName}</div>
-      <div>Educational content only. Not medical or treatment advice.</div>
+      <div style="margin-top:4px">Educational content only. Not medical or treatment advice.</div>
       <div style="margin-top:8px">
         <a href={site.officialSite} target="_blank" rel="noopener noreferrer">
           Official Neoi Site

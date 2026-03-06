@@ -21,79 +21,15 @@ export const seoConfig: SEOConfig = {
   },
 };
 
-const s: Record<string, React.CSSProperties> = {
-  page: {
-    maxWidth: "900px",
-    margin: "0 auto",
-    padding: "0 16px 48px",
-    fontFamily:
-      "system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif",
-    color: "#111",
-    lineHeight: 1.7,
-  },
-  sectionBlock: {
-    borderTop: "1px solid #d0d0d0",
-    paddingTop: "28px",
-    marginTop: "28px",
-  },
-  sectionLabel: {
-    fontSize: "11px",
-    letterSpacing: "0.1em",
-    textTransform: "uppercase" as const,
-    color: "#777",
-    marginBottom: "8px",
-  },
-  h2: {
-    fontSize: "18px",
-    fontWeight: 600,
-    margin: "0 0 14px",
-    color: "#111",
-  },
-  categoryBlock: {
-    borderLeft: "2px solid #d0d0d0",
-    paddingLeft: "16px",
-    marginBottom: "28px",
-  },
-  categoryNumber: {
-    fontSize: "11px",
-    letterSpacing: "0.08em",
-    textTransform: "uppercase" as const,
-    color: "#999",
-    marginBottom: "4px",
-  },
-  categoryTitle: {
-    fontSize: "16px",
-    fontWeight: 600,
-    margin: "0 0 10px",
-    color: "#111",
-  },
-  p: {
-    margin: "0 0 12px",
-    fontSize: "15px",
-  },
-  crossRefBox: {
-    borderTop: "1px solid #d0d0d0",
-    borderBottom: "1px solid #d0d0d0",
-    padding: "16px 0",
-    marginTop: "28px",
-    fontSize: "14px",
-    color: "#444",
-  },
-  link: {
-    color: "#0b63ce",
-    textDecoration: "none",
-  },
-};
-
 const SupplementCategoriesOverview: React.FC = () => {
   return (
-    <div style={s.page}>
+    <div>
 
       {/* Section 1 — Definition Block */}
-      <section style={s.sectionBlock}>
-        <p style={s.sectionLabel}>Definition</p>
-        <h2 style={s.h2}>What "Supplements Singapore" Refers To</h2>
-        <p style={s.p}>
+      <section className="ed-section">
+        <p className="ed-section-label">Definition</p>
+        <h2 className="ed-h2">What "Supplements Singapore" Refers To</h2>
+        <p className="ed-p">
           In Singapore's retail and regulatory context, "supplements" refers to
           a broad category of consumable products intended to complement general
           diet and lifestyle — not to diagnose, treat, or prevent any condition.
@@ -109,14 +45,14 @@ const SupplementCategoriesOverview: React.FC = () => {
       </section>
 
       {/* Section 2 — Major Categories */}
-      <section style={s.sectionBlock}>
-        <p style={s.sectionLabel}>Major Categories</p>
-        <h2 style={s.h2}>Supplement Categories Available in Singapore</h2>
+      <section className="ed-section">
+        <p className="ed-section-label">Major Categories</p>
+        <h2 className="ed-h2">Supplement Categories Available in Singapore</h2>
 
-        <div style={s.categoryBlock}>
-          <p style={s.categoryNumber}>Category 1</p>
-          <h3 style={s.categoryTitle}>Vitamins and Minerals</h3>
-          <p style={s.p}>
+        <div className="ed-category-block">
+          <p className="ed-category-number">Category 1</p>
+          <h3 className="ed-h3">Vitamins and Minerals</h3>
+          <p className="ed-p">
             Vitamin and mineral supplements are among the most widely stocked
             categories in Singapore pharmacies and supermarkets. They range
             from single-nutrient formats — a standalone vitamin C tablet or a
@@ -130,10 +66,10 @@ const SupplementCategoriesOverview: React.FC = () => {
           </p>
         </div>
 
-        <div style={s.categoryBlock}>
-          <p style={s.categoryNumber}>Category 2</p>
-          <h3 style={s.categoryTitle}>Herbal Products</h3>
-          <p style={s.p}>
+        <div className="ed-category-block">
+          <p className="ed-category-number">Category 2</p>
+          <h3 className="ed-h3">Herbal Products</h3>
+          <p className="ed-p">
             Herbal supplements in Singapore include standardised plant extracts,
             traditional botanical preparations, and combination formulas drawing
             on both Asian and Western herbal traditions. This category is
@@ -149,10 +85,10 @@ const SupplementCategoriesOverview: React.FC = () => {
           </p>
         </div>
 
-        <div style={s.categoryBlock}>
-          <p style={s.categoryNumber}>Category 3</p>
-          <h3 style={s.categoryTitle}>Probiotics and Digestive Support</h3>
-          <p style={s.p}>
+        <div className="ed-category-block">
+          <p className="ed-category-number">Category 3</p>
+          <h3 className="ed-h3">Probiotics and Digestive Support</h3>
+          <p className="ed-p">
             Probiotic supplements contain live microorganism strains, typically
             from the Lactobacillus or Bifidobacterium families. Labels generally
             disclose the strain name, colony-forming unit (CFU) count, and
@@ -166,10 +102,10 @@ const SupplementCategoriesOverview: React.FC = () => {
           </p>
         </div>
 
-        <div style={s.categoryBlock}>
-          <p style={s.categoryNumber}>Category 4</p>
-          <h3 style={s.categoryTitle}>Protein and Sports Nutrition</h3>
-          <p style={s.p}>
+        <div className="ed-category-block">
+          <p className="ed-category-number">Category 4</p>
+          <h3 className="ed-h3">Protein and Sports Nutrition</h3>
+          <p className="ed-p">
             Protein supplements — including whey, casein, plant-based protein
             concentrates, and blended formats — are sold through sports retail
             channels, pharmacies, and online platforms in Singapore. The category
@@ -184,10 +120,10 @@ const SupplementCategoriesOverview: React.FC = () => {
           </p>
         </div>
 
-        <div style={{ ...s.categoryBlock, marginBottom: 0 }}>
-          <p style={s.categoryNumber}>Category 5</p>
-          <h3 style={s.categoryTitle}>Beauty-Oriented Supplements</h3>
-          <p style={s.p}>
+        <div className="ed-category-block">
+          <p className="ed-category-number">Category 5</p>
+          <h3 className="ed-h3">Beauty-Oriented Supplements</h3>
+          <p className="ed-p">
             Beauty-oriented supplements in Singapore typically include collagen
             peptide products, biotin formulas, and combination products pairing
             collagen with vitamins C, E, or other antioxidant ingredients.
@@ -203,27 +139,27 @@ const SupplementCategoriesOverview: React.FC = () => {
       </section>
 
       {/* Section 3 — Retail Context */}
-      <section style={s.sectionBlock}>
-        <p style={s.sectionLabel}>Retail Context</p>
-        <h2 style={s.h2}>Where Supplements Are Sold in Singapore</h2>
-        <p style={s.p}>
+      <section className="ed-section">
+        <p className="ed-section-label">Retail Context</p>
+        <h2 className="ed-h2">Where Supplements Are Sold in Singapore</h2>
+        <p className="ed-p">
           Supplements in Singapore are sold through three primary retail
           channels: licensed pharmacy chains, supermarkets and convenience
           retailers, and online marketplaces.
         </p>
-        <p style={s.p}>
+        <p className="ed-p">
           <strong>Pharmacies</strong> offer direct access to pharmacists who can
           assist with label review, ingredient queries, and general purchasing
           context. The product range is typically curated, and products are
           stocked under professional supervision.
         </p>
-        <p style={s.p}>
+        <p className="ed-p">
           <strong>Supermarkets</strong> stock a more limited but broadly
           accessible range, focused on commonly purchased categories such as
           vitamins, minerals, and some herbal products. These are available
           without pharmacist oversight.
         </p>
-        <p style={s.p}>
+        <p className="ed-p">
           <strong>Online marketplaces</strong> offer the widest selection and
           easiest price comparison. They also require the most independent
           verification: buyer due diligence on seller identity, product
@@ -233,10 +169,10 @@ const SupplementCategoriesOverview: React.FC = () => {
       </section>
 
       {/* Section 4 — Regulatory Context */}
-      <section style={s.sectionBlock}>
-        <p style={s.sectionLabel}>Regulatory Context</p>
-        <h2 style={s.h2}>HSA Classification and Labelling Framework</h2>
-        <p style={s.p}>
+      <section className="ed-section">
+        <p className="ed-section-label">Regulatory Context</p>
+        <h2 className="ed-h2">HSA Classification and Labelling Framework</h2>
+        <p className="ed-p">
           Health supplements in Singapore are regulated by the Health Sciences
           Authority (HSA). The HSA distinguishes between registered health
           products — which have undergone formal pre-market evaluation — and
@@ -244,13 +180,13 @@ const SupplementCategoriesOverview: React.FC = () => {
           labelling requirements rather than pre-market registration in most
           cases.
         </p>
-        <p style={s.p}>
+        <p className="ed-p">
           Labelling requirements under the HSA framework include restrictions on
           therapeutic claim language, ingredient disclosure obligations, and
           safety information requirements. Products making claims that exceed
           permitted categories may be subject to regulatory action.
         </p>
-        <p style={s.p}>
+        <p className="ed-p">
           This regulatory framework establishes a minimum standard. It governs
           what can be stated on a label and what safety documentation sellers
           must maintain — it does not constitute an assessment of suitability
@@ -258,19 +194,16 @@ const SupplementCategoriesOverview: React.FC = () => {
           label-reading process in addition to relying on regulatory compliance
           as a baseline.
         </p>
-        <p style={{ ...s.p, marginBottom: 0, color: "#666", fontSize: "13px" }}>
+        <p className="ed-note">
           This section is informational only and does not constitute legal or
           regulatory advice.
         </p>
       </section>
 
       {/* Section 5 — Cross Reference */}
-      <div style={s.crossRefBox}>
+      <div className="ed-cross-ref">
         <strong>Related guide:</strong>{" "}
-        <a
-          href="https://supplementsingapore.neoi.jp/"
-          style={s.link}
-        >
+        <a href="https://supplementsingapore.neoi.jp/">
           Supplements Singapore guide
         </a>{" "}
         — a broader overview of the supplements singapore topic, covering

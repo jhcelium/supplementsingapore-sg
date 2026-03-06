@@ -1,0 +1,403 @@
+/* ============================================================
+   EDITORIAL DESIGN SYSTEM
+   supplementsingapore.neoi.jp
+   - No rounded corners
+   - No shadows
+   - Thin borders only
+   - Content-first typography
+   ============================================================ */
+
+/* ── Reset ── */
+*, *::before, *::after { box-sizing: border-box; }
+
+/* ── Base ── */
+:root {
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-size: 15px;
+  line-height: 1.75;
+  color: #111;
+  background: #fff;
+}
+
+body {
+  margin: 0;
+  background: #fff;
+  color: #111;
+}
+
+/* ── Layout ── */
+.site-header {
+  border-bottom: 1px solid #d8d8d8;
+  padding: 12px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.site-nav a {
+  margin-right: 16px;
+  font-size: 13px;
+  font-weight: 500;
+  color: #111;
+  text-decoration: none;
+  letter-spacing: 0.01em;
+}
+
+.site-nav a:hover {
+  color: #0b63ce;
+  text-decoration: underline;
+}
+
+.header-logo img {
+  height: 38px;
+  width: auto;
+  display: block;
+}
+
+.site-main {
+  max-width: 1024px;
+  margin: 0 auto;
+  padding: 36px 20px 64px;
+}
+
+.site-footer {
+  border-top: 1px solid #d8d8d8;
+  padding: 16px 20px;
+  font-size: 13px;
+  color: #666;
+  margin-top: 0;
+}
+
+.site-footer a {
+  color: #0b63ce;
+  text-decoration: none;
+}
+
+.site-footer a:hover {
+  text-decoration: underline;
+}
+
+/* ── Global Typography ── */
+h1 {
+  font-size: 26px;
+  font-weight: 700;
+  line-height: 1.3;
+  margin: 0 0 20px;
+  color: #111;
+}
+
+h2 {
+  font-size: 19px;
+  font-weight: 600;
+  line-height: 1.35;
+  margin: 0 0 14px;
+  color: #111;
+}
+
+h3 {
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 1.4;
+  margin: 0 0 10px;
+  color: #111;
+}
+
+p {
+  margin: 0 0 16px;
+  font-size: 15px;
+}
+
+a {
+  color: #0b63ce;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+strong {
+  font-weight: 600;
+}
+
+ul, ol {
+  margin: 0 0 16px;
+  padding-left: 20px;
+}
+
+li {
+  margin-bottom: 6px;
+  font-size: 15px;
+}
+
+/* ── Article Prose (markdown-rendered content) ── */
+article h2 {
+  font-size: 19px;
+  font-weight: 600;
+  margin: 28px 0 12px;
+  padding-top: 28px;
+  border-top: 1px solid #d8d8d8;
+  color: #111;
+}
+
+article h2:first-child {
+  margin-top: 0;
+  padding-top: 0;
+  border-top: none;
+}
+
+article h3 {
+  font-size: 16px;
+  font-weight: 600;
+  margin: 20px 0 8px;
+}
+
+article p {
+  margin: 0 0 16px;
+  font-size: 15px;
+}
+
+article ul,
+article ol {
+  margin: 0 0 16px;
+  padding-left: 20px;
+}
+
+article li {
+  margin-bottom: 6px;
+  font-size: 15px;
+}
+
+article strong {
+  font-weight: 600;
+}
+
+/* ── Disclaimer Block ── */
+.disclaimer {
+  border: 1px solid #d8d8d8;
+  background: #fafafa;
+  padding: 11px 14px;
+  font-size: 13px;
+  color: #555;
+  margin: 0 0 28px;
+  line-height: 1.6;
+}
+
+/* ── Official Link Button ── */
+.official-link {
+  display: inline-block;
+  border: 1px solid #0b63ce;
+  padding: 7px 14px;
+  font-size: 14px;
+  font-weight: 500;
+  color: #0b63ce;
+  text-decoration: none;
+  letter-spacing: 0.01em;
+}
+
+.official-link:hover {
+  background: #f0f5ff;
+  text-decoration: none;
+}
+
+/* ── Guide Figure / Infographic ── */
+.guide-figure {
+  margin: 0 0 36px;
+  padding: 0;
+}
+
+.guide-img {
+  width: 100%;
+  height: auto;
+  display: block;
+  border: 1px solid #d8d8d8;
+}
+
+.guide-figure figcaption {
+  font-size: 12px;
+  color: #888;
+  margin-top: 6px;
+  text-align: center;
+  line-height: 1.5;
+}
+
+/* ── Editorial Sections (TSX pages) ── */
+
+/* Section wrapper with top divider */
+.ed-section {
+  border-top: 1px solid #d8d8d8;
+  padding-top: 32px;
+  margin-top: 32px;
+}
+
+/* Eyebrow / section label */
+.ed-section-label {
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #888;
+  margin: 0 0 8px;
+  font-weight: 500;
+}
+
+/* H2 inside ed sections */
+.ed-h2 {
+  font-size: 19px;
+  font-weight: 600;
+  margin: 0 0 16px;
+  color: #111;
+  line-height: 1.35;
+}
+
+/* H3 inside category blocks */
+.ed-h3 {
+  font-size: 16px;
+  font-weight: 600;
+  margin: 0 0 10px;
+  color: #111;
+}
+
+/* Paragraph inside ed sections */
+.ed-p {
+  margin: 0 0 16px;
+  font-size: 15px;
+}
+
+.ed-p:last-child {
+  margin-bottom: 0;
+}
+
+/* Category block: left-bordered item */
+.ed-category-block {
+  border-left: 2px solid #d8d8d8;
+  padding-left: 18px;
+  margin-bottom: 28px;
+}
+
+.ed-category-block:last-child {
+  margin-bottom: 0;
+}
+
+/* Category number eyebrow */
+.ed-category-number {
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #aaa;
+  margin: 0 0 4px;
+  font-weight: 500;
+}
+
+/* Definition block: slightly inset */
+.ed-definition-block {
+  border-left: 2px solid #d8d8d8;
+  padding-left: 18px;
+  margin: 0 0 28px;
+}
+
+/* Key takeaway block */
+.ed-key-takeaway {
+  border: 1px solid #d8d8d8;
+  background: #fafafa;
+  padding: 14px 16px;
+  margin: 0 0 20px;
+  font-size: 14px;
+  line-height: 1.65;
+}
+
+/* Checklist items */
+.ed-checklist {
+  list-style: none;
+  padding-left: 0;
+  margin: 0 0 16px;
+}
+
+.ed-checklist li {
+  padding-left: 20px;
+  position: relative;
+  font-size: 15px;
+  margin-bottom: 8px;
+}
+
+.ed-checklist li::before {
+  content: "—";
+  position: absolute;
+  left: 0;
+  color: #aaa;
+  font-weight: 400;
+}
+
+/* Cross-reference box */
+.ed-cross-ref {
+  border-top: 1px solid #d8d8d8;
+  border-bottom: 1px solid #d8d8d8;
+  padding: 16px 0;
+  margin-top: 32px;
+  font-size: 14px;
+  color: #444;
+  line-height: 1.65;
+}
+
+/* Editorial table */
+.ed-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+  margin: 16px 0 0;
+  line-height: 1.6;
+}
+
+.ed-table th {
+  border-bottom: 1px solid #d8d8d8;
+  border-top: 1px solid #d8d8d8;
+  padding: 8px 14px;
+  text-align: left;
+  font-weight: 600;
+  background: #fafafa;
+  font-size: 13px;
+}
+
+.ed-table td {
+  border-bottom: 1px solid #ebebeb;
+  padding: 10px 14px;
+  vertical-align: top;
+}
+
+.ed-table tr:last-child td {
+  border-bottom: none;
+}
+
+/* Small note / footnote */
+.ed-note {
+  font-size: 13px;
+  color: #777;
+  margin: 12px 0 0;
+  line-height: 1.6;
+}
+
+/* Section with internal links */
+.ed-link-list {
+  list-style: none;
+  padding-left: 0;
+  margin: 0 0 16px;
+  border-top: 1px solid #d8d8d8;
+}
+
+.ed-link-list li {
+  border-bottom: 1px solid #ebebeb;
+  padding: 10px 0;
+  font-size: 15px;
+  margin: 0;
+}
+
+.ed-link-list li a {
+  font-weight: 500;
+}
+
+/* ── Responsive ── */
+@media (max-width: 640px) {
+  h1 { font-size: 22px; }
+  h2, article h2, .ed-h2 { font-size: 17px; }
+  .site-main { padding: 24px 16px 48px; }
+  .ed-table th, .ed-table td { padding: 8px 10px; }
+}
