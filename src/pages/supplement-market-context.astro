@@ -1,0 +1,17 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import SupplementMarketContext, { seoConfig } from "../components/SupplementMarketContext";
+
+const webPageJsonLd = JSON.stringify(seoConfig.jsonLd);
+---
+<BaseLayout
+  fullTitle={seoConfig.title}
+  description={seoConfig.description}
+  path="/supplement-market-context/"
+>
+  <script type="application/ld+json" set:html={webPageJsonLd}></script>
+
+  <h1>Supplements Singapore: Market Context</h1>
+
+  <SupplementMarketContext />
+</BaseLayout>
