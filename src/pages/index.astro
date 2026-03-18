@@ -5,12 +5,36 @@ import site from "../../data/site.json";
 
 const home = loadMarkdown("home.md");
 
+const BASE = "https://supplementsingapore.neoi.jp";
+
 const websiteJsonLd = JSON.stringify({
   "@context": "https://schema.org",
   "@type": "WebSite",
-  "name": "Supplements Singapore",
-  "url": "https://supplementsingapore.neoi.jp/",
-  "description": "A structured guide to supplements in Singapore: health supplements, pharmacy vs online buying, label transparency, and regulation context.",
+  name: "Supplements Singapore",
+  url: BASE + "/",
+  description: "A structured guide to supplements in Singapore: health supplements, pharmacy vs online buying, label transparency, and regulation context.",
+  inLanguage: "en-SG",
+  about: {
+    "@type": "Thing",
+    name: "Health Supplements in Singapore",
+  },
+  publisher: {
+    "@type": "Organization",
+    name: "Neoi — Health Supplements Singapore",
+    url: BASE + "/",
+  },
+  potentialAction: {
+    "@type": "SearchAction",
+    target: {
+      "@type": "EntryPoint",
+      urlTemplate: `${BASE}/?s={search_term_string}`,
+    },
+    "query-input": "required name=search_term_string",
+  },
+  speakable: {
+    "@type": "SpeakableSpecification",
+    cssSelector: ["h1", "article p:first-child"],
+  },
 });
 ---
 <BaseLayout
@@ -33,6 +57,8 @@ const websiteJsonLd = JSON.stringify({
       src="/supplements-singapore-guide.png"
       alt="Supplements Singapore: visual overview covering pharmacy vs online buying, label comparison, regulation context, and long-term routine perspective"
       class="guide-img"
+      fetchpriority="high"
+      loading="eager"
     />
     <figcaption>Visual overview of this guide — sections covered below in full.</figcaption>
   </figure>

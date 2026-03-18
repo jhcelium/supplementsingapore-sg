@@ -14,12 +14,52 @@ export const seoConfig: SEOConfig = {
     description:
       "Understanding how supplements are classified and regulated in Singapore.",
     url: "https://supplementsingapore.neoi.jp/regulatory-landscape-singapore/",
+    inLanguage: "en-SG",
+    speakable: {
+      "@type": "SpeakableSpecification",
+      cssSelector: ["h1", ".ed-p:first-of-type"],
+    },
     isPartOf: {
       "@type": "WebSite",
       name: "Supplements Singapore",
       url: "https://supplementsingapore.neoi.jp/",
     },
   },
+};
+
+export const definedTermSetJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "DefinedTermSet",
+  name: "Supplement Regulatory Terms — Singapore",
+  description:
+    "Key classification and regulatory terms relating to health supplements in Singapore.",
+  inLanguage: "en-SG",
+  hasDefinedTerm: [
+    {
+      "@type": "DefinedTerm",
+      name: "Health Supplements",
+      description:
+        "Products sold to complement general diet and lifestyle in Singapore, regulated under the HSA framework and distinct from registered medicinal products.",
+    },
+    {
+      "@type": "DefinedTerm",
+      name: "Medicinal Products",
+      description:
+        "Products subject to pre-market registration under the Health Products Act, permitted to carry specific therapeutic claims corresponding to their registered indications.",
+    },
+    {
+      "@type": "DefinedTerm",
+      name: "Health Sciences Authority (HSA)",
+      description:
+        "The Singapore regulatory authority responsible for overseeing health product classification, labelling requirements, and post-market surveillance for supplements.",
+    },
+    {
+      "@type": "DefinedTerm",
+      name: "Health Products Act (HPA)",
+      description:
+        "The primary legislative framework under which the HSA classifies and regulates health-related consumables in Singapore.",
+    },
+  ],
 };
 
 const RegulatoryLandscapeSingapore: React.FC = () => {

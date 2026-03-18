@@ -13,6 +13,11 @@ export const seoConfig: SEOConfig = {
     description:
       "An overview of the supplement market in Singapore including retail channels, online marketplaces, and consumer search behavior.",
     url: "https://supplementsingapore.neoi.jp/supplement-market-context/",
+    inLanguage: "en-SG",
+    speakable: {
+      "@type": "SpeakableSpecification",
+      cssSelector: ["h1", ".ed-p:first-of-type"],
+    },
     isPartOf: {
       "@type": "WebSite",
       name: "Supplements Singapore",

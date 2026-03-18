@@ -13,6 +13,9 @@ export type Frontmatter = {
   primary_kw?: string;
   secondary_kws?: string[];
   faq?: FaqItem[];
+  date?: string;
+  dateModified?: string;
+  author?: string;
 };
 
 export type LoadedMarkdown = {

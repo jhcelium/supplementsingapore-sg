@@ -6,10 +6,19 @@ const loaded = loadMarkdown("faq.md");
 const { frontmatter, html } = loaded;
 const faqItems: Array<{ q: string; a: string }> = frontmatter.faq ?? [];
 
+const BASE = "https://supplementsingapore.neoi.jp";
+
 const faqJsonLd = JSON.stringify({
   "@context": "https://schema.org",
   "@type": "FAQPage",
-  mainEntity: faqItems.slice(0, 4).map((item) => ({
+  name: "Supplements Singapore FAQ",
+  url: BASE + "/faq/",
+  inLanguage: "en-SG",
+  speakable: {
+    "@type": "SpeakableSpecification",
+    cssSelector: ["h1", "article h2:first-of-type + p"],
+  },
+  mainEntity: faqItems.map((item) => ({
     "@type": "Question",
     name: item.q,
     acceptedAnswer: { "@type": "Answer", text: item.a },
@@ -37,6 +46,7 @@ const faqJsonLd = JSON.stringify({
       src="/supplements-knowledge-check.png"
       alt="Knowledge Check: 3-step quiz to test your understanding of health supplements in Singapore — covering foundation knowledge, evaluation skills, and practical application"
       class="guide-img"
+      loading="lazy"
     />
     <figcaption>Knowledge check: use these quizzes to verify your understanding before making supplement decisions.</figcaption>
   </figure>

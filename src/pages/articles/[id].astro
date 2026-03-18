@@ -9,13 +9,51 @@ export async function getStaticPaths() {
 
 const { id } = Astro.params;
 const article = loadArticle(id!);
+const { frontmatter } = article;
+
+const BASE = "https://supplementsingapore.neoi.jp";
+const articleUrl = `${BASE}/articles/${id}/`;
+const datePublished = frontmatter.date ?? "2025-01-01";
+const dateModified  = frontmatter.dateModified ?? datePublished;
+
+const articleJsonLd = JSON.stringify({
+  "@context": "https://schema.org",
+  "@type": "Article",
+  headline: frontmatter.title,
+  description: frontmatter.description ?? "",
+  url: articleUrl,
+  inLanguage: "en-SG",
+  datePublished,
+  dateModified,
+  author: {
+    "@type": "Organization",
+    name: "Supplements Singapore",
+    url: BASE + "/",
+  },
+  publisher: {
+    "@type": "Organization",
+    name: "Neoi — Health Supplements Singapore",
+    url: BASE + "/",
+  },
+  isPartOf: {
+    "@type": "WebSite",
+    name: "Supplements Singapore",
+    url: BASE + "/",
+  },
+  speakable: {
+    "@type": "SpeakableSpecification",
+    cssSelector: ["h1", "article p:first-child"],
+  },
+});
 ---
 <BaseLayout
-  title={article.frontmatter.title}
-  description={article.frontmatter.description}
-  path={`/articles/${id}`}
+  title={frontmatter.title}
+  description={frontmatter.description}
+  path={`/articles/${id}/`}
 >
-  <h1>{article.frontmatter.title}</h1>
+  <script type="application/ld+json" set:html={articleJsonLd}></script>
+
+  <h1>{frontmatter.title}</h1>
   <article set:html={article.html} />
   <p style="margin-top:32px"><a href="/">← Back to home</a></p>
 </BaseLayout>

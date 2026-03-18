@@ -13,12 +13,58 @@ export const seoConfig: SEOConfig = {
     description:
       "A structured overview of supplement categories in Singapore, including regulatory framing and purchasing context.",
     url: "https://supplementsingapore.neoi.jp/supplement-categories-overview/",
+    inLanguage: "en-SG",
+    speakable: {
+      "@type": "SpeakableSpecification",
+      cssSelector: ["h1", ".ed-p:first-of-type"],
+    },
     isPartOf: {
       "@type": "WebSite",
       name: "Supplements Singapore",
       url: "https://supplementsingapore.neoi.jp/",
     },
   },
+};
+
+export const definedTermSetJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "DefinedTermSet",
+  name: "Supplement Categories — Singapore",
+  description:
+    "Definitions of the major supplement product categories available in Singapore.",
+  inLanguage: "en-SG",
+  hasDefinedTerm: [
+    {
+      "@type": "DefinedTerm",
+      name: "Vitamins and Minerals",
+      description:
+        "Single-nutrient or multi-nutrient supplement products containing vitamins and minerals, ranging from standalone formats to broad combination formulas.",
+    },
+    {
+      "@type": "DefinedTerm",
+      name: "Herbal Products",
+      description:
+        "Supplement products containing standardised plant extracts, traditional botanical preparations, or combination formulas derived from herbal sources.",
+    },
+    {
+      "@type": "DefinedTerm",
+      name: "Probiotics and Digestive Support",
+      description:
+        "Supplement products containing live microorganism strains or digestive enzymes, often combined with prebiotic fibres.",
+    },
+    {
+      "@type": "DefinedTerm",
+      name: "Protein and Sports Nutrition",
+      description:
+        "Supplement products providing concentrated protein from whey, casein, or plant-based sources, along with amino acid and performance-oriented formulas.",
+    },
+    {
+      "@type": "DefinedTerm",
+      name: "Beauty-Oriented Supplements",
+      description:
+        "Supplement products centred on collagen peptides, biotin, or antioxidant combinations marketed within a beauty or skin-support context.",
+    },
+  ],
 };
 
 const SupplementCategoriesOverview: React.FC = () => {

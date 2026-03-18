@@ -4,11 +4,28 @@ import { loadMarkdown } from "../lib/content";
 
 const about = loadMarkdown("about.md");
 
+const BASE = "https://supplementsingapore.neoi.jp";
+
 const orgJsonLd = JSON.stringify({
   "@context": "https://schema.org",
   "@type": "Organization",
-  "name": "Supplements Singapore",
-  "url": "https://supplementsingapore.neoi.jp/",
+  name: "Supplements Singapore",
+  url: BASE + "/",
+  inLanguage: "en-SG",
+  areaServed: {
+    "@type": "Country",
+    name: "Singapore",
+  },
+  knowsAbout: [
+    "Health supplements in Singapore",
+    "Supplement labelling regulations Singapore",
+    "Pharmacy supplements Singapore",
+    "Online supplement purchasing Singapore",
+    "Natural supplements Singapore",
+    "Vitamin supplements Singapore",
+    "Supplement label reading Singapore",
+    "Health Sciences Authority supplement regulation",
+  ],
 });
 ---
 <BaseLayout
@@ -50,6 +67,7 @@ const orgJsonLd = JSON.stringify({
       src="/supplements-learning-path.png"
       alt="Your 3-Step Journey to Smart Supplement Choices: a structured learning path covering foundation knowledge, evaluation skills, and practical decision-making tools for supplements in Singapore"
       class="guide-img"
+      loading="lazy"
     />
     <figcaption>A suggested 3-step reading path for first-time visitors to this site.</figcaption>
   </figure>

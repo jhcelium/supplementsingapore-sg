@@ -1,8 +1,9 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
-import SupplementCategoriesOverview, { seoConfig } from "../components/SupplementCategoriesOverview";
+import SupplementCategoriesOverview, { seoConfig, definedTermSetJsonLd } from "../components/SupplementCategoriesOverview";
 
 const webPageJsonLd = JSON.stringify(seoConfig.jsonLd);
+const termSetJsonLd = JSON.stringify(definedTermSetJsonLd);
 ---
 <BaseLayout
   fullTitle={seoConfig.title}
@@ -10,6 +11,7 @@ const webPageJsonLd = JSON.stringify(seoConfig.jsonLd);
   path="/supplement-categories-overview/"
 >
   <script type="application/ld+json" set:html={webPageJsonLd}></script>
+  <script type="application/ld+json" set:html={termSetJsonLd}></script>
 
   <h1>Supplements Singapore: Category Overview</h1>
 

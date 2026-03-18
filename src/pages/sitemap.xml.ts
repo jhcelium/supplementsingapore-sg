@@ -3,13 +3,48 @@ import { listArticleIds } from "../lib/content";
 
 export const prerender = true;
 
+const TODAY = new Date().toISOString().split("T")[0];
+
+interface SitemapEntry {
+  loc: string;
+  lastmod: string;
+  changefreq: string;
+  priority: string;
+}
+
 export async function GET() {
   const base = `https://${site.domain}`;
-  const staticPaths = ["/", "/about", "/faq"];
-  const articlePaths = listArticleIds().map((id) => `/articles/${id}`);
-  const allPaths = [...staticPaths, ...articlePaths];
 
-  const urls = allPaths.map((p) => `<url><loc>${base}${p}</loc></url>`).join("");
+  const staticPages: SitemapEntry[] = [
+    { loc: `${base}/`,                                    lastmod: TODAY, changefreq: "weekly",  priority: "1.0" },
+    { loc: `${base}/about/`,                              lastmod: TODAY, changefreq: "monthly", priority: "0.8" },
+    { loc: `${base}/faq/`,                                lastmod: TODAY, changefreq: "monthly", priority: "0.8" },
+    { loc: `${base}/supplement-categories-overview/`,     lastmod: TODAY, changefreq: "monthly", priority: "0.8" },
+    { loc: `${base}/regulatory-landscape-singapore/`,     lastmod: TODAY, changefreq: "monthly", priority: "0.8" },
+    { loc: `${base}/supplement-market-context/`,          lastmod: TODAY, changefreq: "monthly", priority: "0.8" },
+    { loc: `${base}/label-reading-context/`,              lastmod: TODAY, changefreq: "monthly", priority: "0.8" },
+  ];
+
+  const articlePages: SitemapEntry[] = listArticleIds().map((id) => ({
+    loc: `${base}/articles/${id}/`,
+    lastmod: TODAY,
+    changefreq: "monthly",
+    priority: "0.6",
+  }));
+
+  const allPages = [...staticPages, ...articlePages];
+
+  const urls = allPages
+    .map(
+      (p) =>
+        `<url>` +
+        `<loc>${p.loc}</loc>` +
+        `<lastmod>${p.lastmod}</lastmod>` +
+        `<changefreq>${p.changefreq}</changefreq>` +
+        `<priority>${p.priority}</priority>` +
+        `</url>`
+    )
+    .join("");
 
   const body =
     `<?xml version="1.0" encoding="UTF-8"?>` +

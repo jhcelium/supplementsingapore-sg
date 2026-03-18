@@ -1,6 +1,6 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
-import RegulatoryLandscapeSingapore, { seoConfig, definedTermSetJsonLd } from "../components/RegulatoryLandscapeSingapore";
+import LabelReadingContext, { seoConfig, definedTermSetJsonLd } from "../components/LabelReadingContext";
 
 const webPageJsonLd = JSON.stringify(seoConfig.jsonLd);
 const termSetJsonLd = JSON.stringify(definedTermSetJsonLd);
@@ -8,12 +8,12 @@ const termSetJsonLd = JSON.stringify(definedTermSetJsonLd);
 <BaseLayout
   fullTitle={seoConfig.title}
   description={seoConfig.description}
-  path="/regulatory-landscape-singapore/"
+  path="/label-reading-context/"
 >
   <script type="application/ld+json" set:html={webPageJsonLd}></script>
   <script type="application/ld+json" set:html={termSetJsonLd}></script>
 
-  <h1>Supplements Singapore: Regulatory Landscape</h1>
+  <h1>Supplements Singapore: Label Reading Context</h1>
 
-  <RegulatoryLandscapeSingapore />
+  <LabelReadingContext />
 </BaseLayout>
