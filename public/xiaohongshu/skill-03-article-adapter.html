@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>SKILL 03 — 小红书文章改编工具</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:#f7f8fa;font-family:-apple-system,"PingFang SC","Helvetica Neue",sans-serif;color:#222;min-height:100vh;padding:32px 16px 60px}
+.container{max-width:760px;margin:0 auto}
+
+.skill-header{background:linear-gradient(135deg,#7c3aed,#a855f7);border-radius:20px;padding:28px 28px 24px;color:#fff;margin-bottom:24px;box-shadow:0 8px 32px rgba(124,58,237,.25)}
+.skill-badge{display:inline-block;background:rgba(255,255,255,.2);padding:4px 14px;border-radius:20px;font-size:12px;font-weight:700;letter-spacing:1px;margin-bottom:12px}
+.skill-header h1{font-size:24px;font-weight:800;line-height:1.3;margin-bottom:8px}
+.skill-header p{font-size:14px;opacity:.88;line-height:1.6}
+
+.section{background:#fff;border-radius:16px;padding:22px 24px;margin-bottom:16px;box-shadow:0 2px 12px rgba(0,0,0,.06)}
+.section-title{font-size:15px;font-weight:700;color:#111;margin-bottom:14px;display:flex;align-items:center;gap:8px}
+.section-title .icon{font-size:18px}
+
+input[type=text],textarea{width:100%;border:1.5px solid #e5e7eb;border-radius:10px;padding:12px 14px;font-size:14px;font-family:inherit;color:#333;outline:none;transition:border-color .2s}
+input[type=text]:focus,textarea:focus{border-color:#7c3aed}
+input[type=text]::placeholder,textarea::placeholder{color:#aaa}
+textarea{min-height:120px;resize:vertical}
+label{display:block;font-size:13px;font-weight:600;color:#555;margin-bottom:6px;margin-top:14px}
+label:first-child{margin-top:0}
+
+.angle-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:4px}
+.angle-card{border:1.5px solid #e5e7eb;border-radius:10px;padding:10px 12px;cursor:pointer;transition:all .2s}
+.angle-card:hover,.angle-card.selected{border-color:#7c3aed;background:#f5f3ff}
+.angle-card h4{font-size:12px;font-weight:700;color:#7c3aed;margin-bottom:3px}
+.angle-card p{font-size:11px;color:#666;line-height:1.4}
+
+.steps{margin-top:4px}
+.step{display:flex;gap:12px;margin-bottom:16px;align-items:flex-start}
+.step-num{width:26px;height:26px;border-radius:50%;background:#7c3aed;color:#fff;font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px}
+.step-body h3{font-size:13px;font-weight:700;color:#111;margin-bottom:3px}
+.step-body p{font-size:12px;color:#555;line-height:1.6}
+
+.rule-row{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
+.rule{padding:4px 12px;border-radius:20px;font-size:12px;font-weight:600}
+.rule.keep{background:#f0faf4;color:#16a34a;border:1px solid #bbf7d0}
+.rule.remove{background:#fff5f5;color:#dc2626;border:1px solid #fecaca}
+
+.tag-section{margin-top:12px}
+.tag-row{display:flex;flex-wrap:wrap;gap:6px;margin-top:6px}
+.tag-label{font-size:12px;font-weight:700;color:#888;margin-top:10px;margin-bottom:4px}
+.tag{padding:3px 10px;border-radius:14px;font-size:12px;cursor:pointer}
+.tag.fixed{background:#fff0f2;color:#ff2442;border:1px solid #ffd0d7}
+.tag.topic{background:#f0f6ff;color:#1677ff;border:1px solid #c5d9f7}
+.tag.audience{background:#f5f3ff;color:#7c3aed;border:1px solid #ddd6fe}
+
+.btn-run{width:100%;padding:14px;background:#7c3aed;color:#fff;border:none;border-radius:12px;font-size:16px;font-weight:700;cursor:pointer;transition:background .2s;margin-top:8px;letter-spacing:.5px}
+.btn-run:hover{background:#6d28d9}
+.btn-run:active{transform:scale(.98)}
+
+.note{background:#fffbe6;border:1px solid #ffe58f;border-radius:10px;padding:12px 16px;font-size:13px;color:#886a00;line-height:1.6}
+.note strong{color:#b8860b}
+
+.preview-box{background:#f9f9fb;border:1px solid #e5e7eb;border-radius:10px;padding:16px;font-size:13px;color:#444;line-height:1.8;white-space:pre-wrap;min-height:60px}
+
+@media(max-width:500px){.angle-grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="container">
+
+<div class="skill-header">
+  <div class="skill-badge">SKILL 03</div>
+  <h1>✍️ 小红书文章改编工具</h1>
+  <p>将英文健康/保健品文章摘要提炼并改编为小红书中文笔记。输入原文 URL 或内容，输出完整图文笔记（标题+正文+话题标签）。</p>
+</div>
+
+<!-- 输入 -->
+<div class="section">
+  <div class="section-title"><span class="icon">📥</span>文章输入</div>
+  <label>文章 URL 或来自 SKILL 01 的文章编号</label>
+  <input type="text" id="articleUrl" placeholder="https://examine.com/... 或直接输入文章编号如 [01]"/>
+  <label>或直接粘贴英文原文</label>
+  <textarea id="articleContent" placeholder="将英文文章内容粘贴于此（可选，提供 URL 则自动抓取）"></textarea>
+</div>
+
+<!-- 改编角度 -->
+<div class="section">
+  <div class="section-title"><span class="icon">🎯</span>选择改编角度</div>
+  <div class="angle-grid" id="angleGrid">
+    <div class="angle-card selected" onclick="selectAngle(this)">
+      <h4>研究报道型</h4>
+      <p>最新研究发现：XX原来这么重要</p>
+    </div>
+    <div class="angle-card" onclick="selectAngle(this)">
+      <h4>实用指南型</h4>
+      <p>关于XX，这X点你必须知道</p>
+    </div>
+    <div class="angle-card" onclick="selectAngle(this)">
+      <h4>误区纠正型</h4>
+      <p>很多人吃XX都吃错了，这才是正确方式</p>
+    </div>
+    <div class="angle-card" onclick="selectAngle(this)">
+      <h4>选购指南型</h4>
+      <p>XX保健品选购完全指南</p>
+    </div>
+    <div class="angle-card" onclick="selectAngle(this)">
+      <h4>体验分享型</h4>
+      <p>坚持吃了X个月的真实变化</p>
+    </div>
+    <div class="angle-card" onclick="selectAngle(this)">
+      <h4>专家观点型</h4>
+      <p>营养师说的，关于XX这件事</p>
+    </div>
+  </div>
+</div>
+
+<!-- 工作流程 -->
+<div class="section">
+  <div class="section-title"><span class="icon">⚙️</span>改编流程（8步）</div>
+  <div class="steps">
+    <div class="step"><div class="step-num">1</div><div class="step-body"><h3>抓取并解读原文</h3><p>提取核心论点、关键数据、实用建议、目标受众、潜在风险点。</p></div></div>
+    <div class="step"><div class="step-num">2</div><div class="step-body"><h3>确定改编角度</h3><p>根据原文类型选择最适合的小红书切入方式。</p></div></div>
+    <div class="step"><div class="step-num">3</div><div class="step-body"><h3>提炼3-5个核心要点</h3><p>中文口语化表达，保留数据，删除学术细节和医疗声明。</p></div></div>
+    <div class="step"><div class="step-num">4</div><div class="step-body"><h3>撰写3个备选标题</h3><p>疑问型 / 数字型 / 反转型，15-20字，前5字含核心关键词。</p></div></div>
+    <div class="step"><div class="step-num">5</div><div class="step-body"><h3>撰写完整正文</h3><p>600-1000字，开场引入 → 核心要点 → 新加坡本土化 → 结尾互动。</p></div></div>
+    <div class="step"><div class="step-num">6</div><div class="step-body"><h3>生成15-20个话题标签</h3><p>账号固定标签5个 + 内容标签5-8个 + 人群标签3-5个。</p></div></div>
+    <div class="step"><div class="step-num">7</div><div class="step-body"><h3>配图建议</h3><p>封面图（3:4）+ 要点信息图 + 氛围图，共3-5张方向。</p></div></div>
+    <div class="step"><div class="step-num">8</div><div class="step-body"><h3>合规检查</h3><p>无绝对化声明、无虚假数据、无抄袭、符合小红书社区规范。</p></div></div>
+  </div>
+</div>
+
+<!-- 提炼原则 -->
+<div class="section">
+  <div class="section-title"><span class="icon">📋</span>提炼原则</div>
+  <div class="rule-row">
+    <span class="rule keep">✅ 保留：核心结论</span>
+    <span class="rule keep">✅ 保留：实用数字</span>
+    <span class="rule keep">✅ 保留：行动建议</span>
+    <span class="rule keep">✅ 保留：对比信息</span>
+    <span class="rule remove">❌ 删除：过度技术细节</span>
+    <span class="rule remove">❌ 删除：绝对化医疗声明</span>
+    <span class="rule remove">❌ 删除：美国保险/FDA处方</span>
+    <span class="rule remove">❌ 删除：长篇学术讨论</span>
+  </div>
+</div>
+
+<!-- 话题标签库 -->
+<div class="section">
+  <div class="section-title"><span class="icon">🏷️</span>话题标签库（点击添加）</div>
+  <div class="tag-label">账号固定标签（每篇必带）</div>
+  <div class="tag-row">
+    <span class="tag fixed" onclick="addTag(this)">#新加坡保健品</span>
+    <span class="tag fixed" onclick="addTag(this)">#新加坡养生</span>
+    <span class="tag fixed" onclick="addTag(this)">#保健品推荐</span>
+    <span class="tag fixed" onclick="addTag(this)">#健康干货</span>
+    <span class="tag fixed" onclick="addTag(this)">#SG生活</span>
+  </div>
+  <div class="tag-label">内容话题标签</div>
+  <div class="tag-row">
+    <span class="tag topic" onclick="addTag(this)">#胶原蛋白</span>
+    <span class="tag topic" onclick="addTag(this)">#益生菌</span>
+    <span class="tag topic" onclick="addTag(this)">#维生素D</span>
+    <span class="tag topic" onclick="addTag(this)">#Omega3</span>
+    <span class="tag topic" onclick="addTag(this)">#鱼油</span>
+    <span class="tag topic" onclick="addTag(this)">#免疫力</span>
+    <span class="tag topic" onclick="addTag(this)">#肠道健康</span>
+    <span class="tag topic" onclick="addTag(this)">#抗衰老</span>
+    <span class="tag topic" onclick="addTag(this)">#关节保护</span>
+    <span class="tag topic" onclick="addTag(this)">#玻尿酸</span>
+    <span class="tag topic" onclick="addTag(this)">#维生素C</span>
+    <span class="tag topic" onclick="addTag(this)">#美白保养</span>
+    <span class="tag topic" onclick="addTag(this)">#皮肤保养</span>
+    <span class="tag topic" onclick="addTag(this)">#口服美容</span>
+  </div>
+  <div class="tag-label">人群标签</div>
+  <div class="tag-row">
+    <span class="tag audience" onclick="addTag(this)">#新加坡妈妈</span>
+    <span class="tag audience" onclick="addTag(this)">#上班族养生</span>
+    <span class="tag audience" onclick="addTag(this)">#30+保养</span>
+    <span class="tag audience" onclick="addTag(this)">#健身打卡</span>
+    <span class="tag audience" onclick="addTag(this)">#学生党</span>
+  </div>
+  <div class="tag-label">已选标签</div>
+  <div class="preview-box" id="selectedTags">（点击上方标签添加）</div>
+</div>
+
+<button class="btn-run" onclick="copyPrompt()">🚀 生成 Claude 改编指令并复制</button>
+
+<div class="note" style="margin-top:16px">
+  <strong>📌 提示：</strong>复制指令后，粘贴到 Claude 对话框即可自动执行改编流程。输出包含3个备选标题、完整正文、话题标签、配图建议和合规检查。
+</div>
+
+</div>
+
+<script>
+let selectedTags = new Set();
+
+function selectAngle(el) {
+  document.querySelectorAll('.angle-card').forEach(c => c.classList.remove('selected'));
+  el.classList.add('selected');
+}
+
+function addTag(el) {
+  const tag = el.textContent;
+  if (selectedTags.has(tag)) {
+    selectedTags.delete(tag);
+    el.style.opacity = '1';
+  } else {
+    selectedTags.add(tag);
+    el.style.opacity = '.4';
+  }
+  const box = document.getElementById('selectedTags');
+  box.textContent = selectedTags.size ? [...selectedTags].join(' ') : '（点击上方标签添加）';
+}
+
+function copyPrompt() {
+  const url = document.getElementById('articleUrl').value.trim();
+  const content = document.getElementById('articleContent').value.trim();
+  const angle = document.querySelector('.angle-card.selected')?.querySelector('h4')?.textContent || '研究报道型';
+  const tags = [...selectedTags].join(' ') || '#新加坡保健品 #新加坡养生 #保健品推荐 #健康干货 #SG生活';
+
+  const src = url ? `文章 URL：${url}` : (content ? `文章内容：\n${content.substring(0,200)}...` : '请提供文章 URL 或内容');
+
+  const prompt = `请运行小红书文章改编（SKILL 03）。
+
+${src}
+
+改编角度偏好：${angle}
+预设话题标签：${tags}
+
+请按以下步骤执行：
+1. 抓取并解读原文（提取核心论点、关键数据、实用建议）
+2. 提炼3-5个核心要点，中文口语化表达
+3. 撰写3个备选标题（疑问型/数字型/反转型）
+4. 撰写完整正文600-1000字（含开场引入、核心要点、新加坡本土化、结尾互动）
+5. 生成15-20个分层话题标签
+6. 提供配图建议（3-5张方向）
+7. 完成合规检查清单
+
+输出格式：按原文信息→备选标题→正文→话题标签→配图建议→合规检查的顺序输出。`;
+
+  navigator.clipboard.writeText(prompt).then(() => {
+    const btn = document.querySelector('.btn-run');
+    btn.textContent = '✅ 指令已复制！粘贴到 Claude 执行';
+    btn.style.background = '#07c160';
+    setTimeout(() => {
+      btn.textContent = '🚀 生成 Claude 改编指令并复制';
+      btn.style.background = '';
+    }, 3000);
+  });
+}
+</script>
+</body>
+</html>
