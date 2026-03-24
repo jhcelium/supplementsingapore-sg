@@ -5,14 +5,14 @@ export const seoConfig: SEOConfig = {
   title: "Supplements Singapore | Market Context",
   description:
     "An overview of the supplement market in Singapore including retail channels, online marketplaces, and consumer search behavior.",
-  canonical: "https://supplementsingapore.neoi.jp/supplement-market-context/",
+  canonical: "https://supplementsingapore.neoi.jp/supplement-market-context",
   jsonLd: {
     "@context": "https://schema.org",
     "@type": "WebPage",
     name: "Supplements Singapore | Market Context",
     description:
       "An overview of the supplement market in Singapore including retail channels, online marketplaces, and consumer search behavior.",
-    url: "https://supplementsingapore.neoi.jp/supplement-market-context/",
+    url: "https://supplementsingapore.neoi.jp/supplement-market-context",
     inLanguage: "en-SG",
     speakable: {
       "@type": "SpeakableSpecification",
@@ -21,7 +21,7 @@ export const seoConfig: SEOConfig = {
     isPartOf: {
       "@type": "WebSite",
       name: "Supplements Singapore",
-      url: "https://supplementsingapore.neoi.jp/",
+      url: "https://supplementsingapore.neoi.jp",
     },
   },
 };
@@ -224,7 +224,7 @@ const SupplementMarketContext: React.FC = () => {
           For a broader introduction to the supplement category in Singapore —
           covering label comparison, regulatory framing, and pharmacy versus
           online purchasing considerations — see the{" "}
-          <a href="https://supplementsingapore.neoi.jp/">
+          <a href="https://supplementsingapore.neoi.jp">
             Supplements Singapore guide
           </a>
           .

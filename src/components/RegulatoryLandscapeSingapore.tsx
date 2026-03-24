@@ -6,14 +6,14 @@ export const seoConfig: SEOConfig = {
   description:
     "Understanding how supplements are classified and regulated in Singapore.",
   canonical:
-    "https://supplementsingapore.neoi.jp/regulatory-landscape-singapore/",
+    "https://supplementsingapore.neoi.jp/regulatory-landscape-singapore",
   jsonLd: {
     "@context": "https://schema.org",
     "@type": "WebPage",
     name: "Supplements Singapore | Regulatory Landscape",
     description:
       "Understanding how supplements are classified and regulated in Singapore.",
-    url: "https://supplementsingapore.neoi.jp/regulatory-landscape-singapore/",
+    url: "https://supplementsingapore.neoi.jp/regulatory-landscape-singapore",
     inLanguage: "en-SG",
     speakable: {
       "@type": "SpeakableSpecification",
@@ -262,7 +262,7 @@ const RegulatoryLandscapeSingapore: React.FC = () => {
       {/* Section 5 — Cross Link */}
       <div className="ed-cross-ref">
         <strong>Related overview:</strong>{" "}
-        <a href="https://supplementsingapore.neoi.jp/">
+        <a href="https://supplementsingapore.neoi.jp">
           Supplements Singapore guide
         </a>{" "}
         — a structured introduction to the supplements singapore topic,

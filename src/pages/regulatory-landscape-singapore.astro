@@ -8,7 +8,11 @@ const termSetJsonLd = JSON.stringify(definedTermSetJsonLd);
 <BaseLayout
   fullTitle={seoConfig.title}
   description={seoConfig.description}
-  path="/regulatory-landscape-singapore/"
+  path="/regulatory-landscape-singapore"
+  breadcrumbItems={[
+    { name: "Home", path: "" },
+    { name: "Regulatory landscape", path: "/regulatory-landscape-singapore" },
+  ]}
 >
   <script type="application/ld+json" set:html={webPageJsonLd}></script>
   <script type="application/ld+json" set:html={termSetJsonLd}></script>

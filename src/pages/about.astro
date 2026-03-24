@@ -10,7 +10,7 @@ const orgJsonLd = JSON.stringify({
   "@context": "https://schema.org",
   "@type": "Organization",
   name: "Supplements Singapore",
-  url: BASE + "/",
+  url: BASE,
   inLanguage: "en-SG",
   areaServed: {
     "@type": "Country",
@@ -31,7 +31,11 @@ const orgJsonLd = JSON.stringify({
 <BaseLayout
   fullTitle="About | Supplements Singapore Guide"
   description="Purpose and approach behind Supplements Singapore: non-commercial, label-focused education."
-  path="/about/"
+  path="/about"
+  breadcrumbItems={[
+    { name: "Home", path: "" },
+    { name: "About", path: "/about" },
+  ]}
 >
   <script type="application/ld+json" set:html={orgJsonLd}></script>
 

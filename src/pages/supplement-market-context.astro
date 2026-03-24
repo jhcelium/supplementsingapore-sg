@@ -7,7 +7,11 @@ const webPageJsonLd = JSON.stringify(seoConfig.jsonLd);
 <BaseLayout
   fullTitle={seoConfig.title}
   description={seoConfig.description}
-  path="/supplement-market-context/"
+  path="/supplement-market-context"
+  breadcrumbItems={[
+    { name: "Home", path: "" },
+    { name: "Market context", path: "/supplement-market-context" },
+  ]}
 >
   <script type="application/ld+json" set:html={webPageJsonLd}></script>
 

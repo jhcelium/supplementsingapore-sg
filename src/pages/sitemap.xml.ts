@@ -16,17 +16,17 @@ export async function GET() {
   const base = `https://${site.domain}`;
 
   const staticPages: SitemapEntry[] = [
-    { loc: `${base}/`,                                    lastmod: TODAY, changefreq: "weekly",  priority: "1.0" },
-    { loc: `${base}/about/`,                              lastmod: TODAY, changefreq: "monthly", priority: "0.8" },
-    { loc: `${base}/faq/`,                                lastmod: TODAY, changefreq: "monthly", priority: "0.8" },
-    { loc: `${base}/supplement-categories-overview/`,     lastmod: TODAY, changefreq: "monthly", priority: "0.8" },
-    { loc: `${base}/regulatory-landscape-singapore/`,     lastmod: TODAY, changefreq: "monthly", priority: "0.8" },
-    { loc: `${base}/supplement-market-context/`,          lastmod: TODAY, changefreq: "monthly", priority: "0.8" },
-    { loc: `${base}/label-reading-context/`,              lastmod: TODAY, changefreq: "monthly", priority: "0.8" },
+    { loc: base, lastmod: TODAY, changefreq: "weekly", priority: "1.0" },
+    { loc: `${base}/about`, lastmod: TODAY, changefreq: "monthly", priority: "0.8" },
+    { loc: `${base}/faq`, lastmod: TODAY, changefreq: "monthly", priority: "0.8" },
+    { loc: `${base}/supplement-categories-overview`, lastmod: TODAY, changefreq: "monthly", priority: "0.8" },
+    { loc: `${base}/regulatory-landscape-singapore`, lastmod: TODAY, changefreq: "monthly", priority: "0.8" },
+    { loc: `${base}/supplement-market-context`, lastmod: TODAY, changefreq: "monthly", priority: "0.8" },
+    { loc: `${base}/label-reading-context`, lastmod: TODAY, changefreq: "monthly", priority: "0.8" },
   ];
 
   const articlePages: SitemapEntry[] = listArticleIds().map((id) => ({
-    loc: `${base}/articles/${id}/`,
+    loc: `${base}/articles/${id}`,
     lastmod: TODAY,
     changefreq: "monthly",
     priority: "0.6",

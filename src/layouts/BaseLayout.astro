@@ -1,6 +1,7 @@
 ---
 import Seo from "../components/Seo.astro";
 import site from "../../data/site.json";
+import { absoluteUrl, type BreadcrumbCrumb } from "../lib/seo-url";
 import "../styles/editorial.css";
 
 interface Props {
@@ -8,15 +9,26 @@ interface Props {
   description?: string;
   path?: string;
   fullTitle?: string;
+  ogImage?: string;
+  breadcrumbItems?: BreadcrumbCrumb[];
 }
-const { title, description, path, fullTitle } = Astro.props;
+const { title, description, path, fullTitle, ogImage, breadcrumbItems } = Astro.props;
+
+const showBreadcrumb = breadcrumbItems && breadcrumbItems.length > 0;
 ---
 <!DOCTYPE html>
 <html lang="en-SG">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <Seo title={title} description={description} path={path} fullTitle={fullTitle} />
+    <Seo
+      title={title}
+      description={description}
+      path={path}
+      fullTitle={fullTitle}
+      ogImage={ogImage}
+      breadcrumbItems={breadcrumbItems}
+    />
   </head>
   <body>
     <header class="site-header">
@@ -31,6 +43,25 @@ const { title, description, path, fullTitle } = Astro.props;
     </header>
 
     <main class="site-main">
+      {showBreadcrumb && (
+        <nav class="breadcrumb-nav" aria-label="Breadcrumb">
+          <ol class="breadcrumb-list">
+            {breadcrumbItems!.map((crumb, i) => {
+              const isLast = i === breadcrumbItems!.length - 1;
+              const href = absoluteUrl(crumb.path === "" ? "/" : crumb.path);
+              return (
+                <li class="breadcrumb-item">
+                  {!isLast ? (
+                    <a href={href}>{crumb.name}</a>
+                  ) : (
+                    <span class="breadcrumb-current">{crumb.name}</span>
+                  )}
+                </li>
+              );
+            })}
+          </ol>
+        </nav>
+      )}
       <slot />
     </main>
 

@@ -12,7 +12,7 @@ const faqJsonLd = JSON.stringify({
   "@context": "https://schema.org",
   "@type": "FAQPage",
   name: "Supplements Singapore FAQ",
-  url: BASE + "/faq/",
+  url: `${BASE}/faq`,
   inLanguage: "en-SG",
   speakable: {
     "@type": "SpeakableSpecification",
@@ -28,7 +28,11 @@ const faqJsonLd = JSON.stringify({
 <BaseLayout
   fullTitle="FAQ | Supplements Singapore"
   description="Common questions about buying and understanding supplements in Singapore."
-  path="/faq/"
+  path="/faq"
+  breadcrumbItems={[
+    { name: "Home", path: "" },
+    { name: "FAQ", path: "/faq" },
+  ]}
 >
   <script type="application/ld+json" set:html={faqJsonLd}></script>
 

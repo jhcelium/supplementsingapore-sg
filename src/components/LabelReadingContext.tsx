@@ -5,14 +5,14 @@ export const seoConfig: SEOConfig = {
   title: "Supplements Singapore | Label Reading Context",
   description:
     "A structured explanation of how supplement labels are commonly read and interpreted in Singapore.",
-  canonical: "https://supplementsingapore.neoi.jp/label-reading-context/",
+  canonical: "https://supplementsingapore.neoi.jp/label-reading-context",
   jsonLd: {
     "@context": "https://schema.org",
     "@type": "WebPage",
     name: "Supplements Singapore | Label Reading Context",
     description:
       "A structured explanation of how supplement labels are commonly read and interpreted in Singapore.",
-    url: "https://supplementsingapore.neoi.jp/label-reading-context/",
+    url: "https://supplementsingapore.neoi.jp/label-reading-context",
     inLanguage: "en-SG",
     speakable: {
       "@type": "SpeakableSpecification",
@@ -21,7 +21,7 @@ export const seoConfig: SEOConfig = {
     isPartOf: {
       "@type": "WebSite",
       name: "Supplements Singapore",
-      url: "https://supplementsingapore.neoi.jp/",
+      url: "https://supplementsingapore.neoi.jp",
     },
   },
 };
@@ -258,7 +258,7 @@ const LabelReadingContext: React.FC = () => {
           For a broader introduction to supplement purchasing context in
           Singapore — covering retail channels, regulatory framing, and
           comparison methodology — see the{" "}
-          <a href="https://supplementsingapore.neoi.jp/">
+          <a href="https://supplementsingapore.neoi.jp">
             Supplements Singapore guide
           </a>
           .

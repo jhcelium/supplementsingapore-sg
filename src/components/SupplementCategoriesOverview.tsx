@@ -5,7 +5,7 @@ export const seoConfig: SEOConfig = {
   title: "Supplements Singapore | Category Overview",
   description:
     "A structured overview of supplement categories in Singapore, including regulatory framing and purchasing context.",
-  canonical: "https://supplementsingapore.neoi.jp/supplement-categories-overview/",
+  canonical: "https://supplementsingapore.neoi.jp/supplement-categories-overview",
   jsonLd: {
     "@context": "https://schema.org",
     "@type": "WebPage",
@@ -21,7 +21,7 @@ export const seoConfig: SEOConfig = {
     isPartOf: {
       "@type": "WebSite",
       name: "Supplements Singapore",
-      url: "https://supplementsingapore.neoi.jp/",
+      url: "https://supplementsingapore.neoi.jp",
     },
   },
 };
@@ -249,7 +249,7 @@ const SupplementCategoriesOverview: React.FC = () => {
       {/* Section 5 — Cross Reference */}
       <div className="ed-cross-ref">
         <strong>Related guide:</strong>{" "}
-        <a href="https://supplementsingapore.neoi.jp/">
+        <a href="https://supplementsingapore.neoi.jp">
           Supplements Singapore guide
         </a>{" "}
         — a broader overview of the supplements singapore topic, covering

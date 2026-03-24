@@ -60,6 +60,53 @@ body {
   padding: 36px 20px 64px;
 }
 
+/* ── Breadcrumb (minimal editorial) ── */
+.breadcrumb-nav {
+  margin: -8px 0 24px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid #d8d8d8;
+}
+
+.breadcrumb-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  font-size: 13px;
+  line-height: 1.4;
+  color: #666;
+}
+
+.breadcrumb-item {
+  display: flex;
+  align-items: center;
+  margin: 0;
+}
+
+.breadcrumb-item:not(:last-child)::after {
+  content: "/";
+  margin: 0 8px;
+  color: #ccc;
+  font-weight: 400;
+}
+
+.breadcrumb-nav a {
+  color: #111;
+  text-decoration: none;
+}
+
+.breadcrumb-nav a:hover {
+  color: #0b63ce;
+  text-decoration: underline;
+}
+
+.breadcrumb-current {
+  color: #555;
+  font-weight: 500;
+}
+
 .site-footer {
   border-top: 1px solid #d8d8d8;
   padding: 16px 20px;

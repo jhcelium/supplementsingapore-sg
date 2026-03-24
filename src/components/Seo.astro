@@ -1,17 +1,39 @@
 ---
 import site from "../../data/site.json";
+import { absoluteUrl, type BreadcrumbCrumb } from "../lib/seo-url";
+
 interface Props {
   title?: string;
   description?: string;
   path?: string;
   fullTitle?: string;
+  /** Override default OG/Twitter image (absolute URL recommended). */
+  ogImage?: string;
+  /** Visible breadcrumb + BreadcrumbList JSON-LD. Omit on home. */
+  breadcrumbItems?: BreadcrumbCrumb[];
 }
-const { title, description, path, fullTitle } = Astro.props;
+
+const { title, description, path, fullTitle, ogImage: ogImageProp, breadcrumbItems } = Astro.props;
 
 const resolvedTitle = fullTitle ?? (title ? `${title} | ${site.siteName}` : site.siteName);
-const canonical = `https://${site.domain}${path ?? "/"}`;
+const canonical = absoluteUrl(path);
 const desc = description ?? "";
-const ogImage = `https://${site.domain}/supplements-singapore-guide.png`;
+const defaultOg = `https://${site.domain}/supplements-singapore-guide.png`;
+const ogImage = ogImageProp ?? defaultOg;
+
+const breadcrumbJsonLd =
+  breadcrumbItems && breadcrumbItems.length > 0
+    ? JSON.stringify({
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        itemListElement: breadcrumbItems.map((crumb, i) => ({
+          "@type": "ListItem",
+          position: i + 1,
+          name: crumb.name,
+          item: absoluteUrl(crumb.path === "" ? "/" : crumb.path),
+        })),
+      })
+    : null;
 ---
 <title>{resolvedTitle}</title>
 <meta name="robots" content="index,follow" />
@@ -34,3 +56,7 @@ const ogImage = `https://${site.domain}/supplements-singapore-guide.png`;
 {desc && <meta name="twitter:description" content={desc} />}
 <meta name="twitter:image" content={ogImage} />
 <meta name="twitter:image:alt" content="Supplements Singapore — Practical Guide" />
+
+{breadcrumbJsonLd && (
+  <script type="application/ld+json" set:html={breadcrumbJsonLd}></script>
+)}

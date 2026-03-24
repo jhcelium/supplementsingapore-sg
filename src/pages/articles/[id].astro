@@ -12,7 +12,7 @@ const article = loadArticle(id!);
 const { frontmatter } = article;
 
 const BASE = "https://supplementsingapore.neoi.jp";
-const articleUrl = `${BASE}/articles/${id}/`;
+const articleUrl = `${BASE}/articles/${id}`;
 const datePublished = frontmatter.date ?? "2025-01-01";
 const dateModified  = frontmatter.dateModified ?? datePublished;
 
@@ -28,17 +28,17 @@ const articleJsonLd = JSON.stringify({
   author: {
     "@type": "Organization",
     name: "Supplements Singapore",
-    url: BASE + "/",
+    url: BASE,
   },
   publisher: {
     "@type": "Organization",
     name: "Neoi — Health Supplements Singapore",
-    url: BASE + "/",
+    url: BASE,
   },
   isPartOf: {
     "@type": "WebSite",
     name: "Supplements Singapore",
-    url: BASE + "/",
+    url: BASE,
   },
   speakable: {
     "@type": "SpeakableSpecification",
@@ -49,7 +49,11 @@ const articleJsonLd = JSON.stringify({
 <BaseLayout
   title={frontmatter.title}
   description={frontmatter.description}
-  path={`/articles/${id}/`}
+  path={`/articles/${id}`}
+  breadcrumbItems={[
+    { name: "Home", path: "" },
+    { name: frontmatter.title, path: `/articles/${id}` },
+  ]}
 >
   <script type="application/ld+json" set:html={articleJsonLd}></script>
 
