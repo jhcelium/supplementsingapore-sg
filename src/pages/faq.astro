@@ -1,80 +1,28 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
-import { loadMarkdown } from "../lib/content";
+import Faq, { seoConfig, buildWebPageJsonLd, buildFaqPageJsonLd } from "./_Faq";
 
-const loaded = loadMarkdown("faq.md");
-const { frontmatter, html } = loaded;
-const faqItems: Array<{ q: string; a: string }> = frontmatter.faq ?? [];
-
-const BASE = "https://supplementsingapore.neoi.jp";
-
-const faqJsonLd = JSON.stringify({
-  "@context": "https://schema.org",
-  "@type": "FAQPage",
-  name: "Supplements Singapore FAQ",
-  url: `${BASE}/faq`,
-  inLanguage: "en-SG",
-  speakable: {
-    "@type": "SpeakableSpecification",
-    cssSelector: ["h1", "article h2:first-of-type + p"],
-  },
-  mainEntity: faqItems.map((item) => ({
-    "@type": "Question",
-    name: item.q,
-    acceptedAnswer: { "@type": "Answer", text: item.a },
-  })),
-});
+const webPageJsonLd = JSON.stringify(buildWebPageJsonLd());
+const faqPageJsonLd = JSON.stringify(buildFaqPageJsonLd());
 ---
 <BaseLayout
-  fullTitle="FAQ | Supplements Singapore"
-  description="Common questions about buying and understanding supplements in Singapore."
+  fullTitle={seoConfig.title}
+  description={seoConfig.description}
   path="/faq"
   breadcrumbItems={[
     { name: "Home", path: "" },
     { name: "FAQ", path: "/faq" },
   ]}
 >
-  <script type="application/ld+json" set:html={faqJsonLd}></script>
+  <script type="application/ld+json" set:html={webPageJsonLd}></script>
+  <script type="application/ld+json" set:html={faqPageJsonLd}></script>
 
-  <h1>Supplements Singapore FAQ</h1>
+  <h1>Supplements Singapore: Frequently Asked Questions</h1>
 
   <div class="disclaimer">
-    General educational information only. Not medical advice.
-    If you have questions about your personal situation, consult a qualified clinician or pharmacist.
+    General educational information only. Not medical or legal advice.
+    For personal questions, consult a qualified clinician or pharmacist.
   </div>
 
-  <article set:html={html} />
-
-  <figure class="guide-figure">
-    <img
-      src="/supplements-knowledge-check.png"
-      alt="Knowledge Check: 3-step quiz to test your understanding of health supplements in Singapore — covering foundation knowledge, evaluation skills, and practical application"
-      class="guide-img"
-      loading="lazy"
-    />
-    <figcaption>Knowledge check: use these quizzes to verify your understanding before making supplement decisions.</figcaption>
-  </figure>
-
-  <section>
-    <h2>Specialist guides</h2>
-    <p>For more depth on specific topics raised in these questions:</p>
-    <ul>
-      <li><a href="https://healthsupplements.neoi.jp/">Health supplements guidance</a> — supplement categories and label conventions</li>
-      <li><a href="https://supplementshop.neoi.jp/">Supplement shopping framework</a> — structured evaluation before purchase</li>
-      <li><a href="https://onlinesupplements.neoi.jp/">Online buying verification</a> — assessing supplements singapore online listings</li>
-      <li><a href="https://naturalsupplements.neoi.jp/">Natural label clarity</a> — understanding "natural" on supplement labels</li>
-    </ul>
-  </section>
-
-  <section>
-    <h2>Official Neoi Supplement Site</h2>
-    <p>
-      For product information and brand details, visit the official Neoi supplement site.
-    </p>
-    <p>
-      <a href="https://supplement.neoi.jp/en" target="_blank" rel="noopener" class="official-link">
-        Visit Official Neoi Supplement Site →
-      </a>
-    </p>
-  </section>
+  <Faq />
 </BaseLayout>
