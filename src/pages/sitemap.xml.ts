@@ -23,6 +23,7 @@ export async function GET() {
     { loc: `${base}/regulatory-landscape-singapore`, lastmod: TODAY, changefreq: "monthly", priority: "0.8" },
     { loc: `${base}/supplement-market-context`, lastmod: TODAY, changefreq: "monthly", priority: "0.8" },
     { loc: `${base}/label-reading-context`, lastmod: TODAY, changefreq: "monthly", priority: "0.8" },
+    { loc: `${base}/definitions`, lastmod: TODAY, changefreq: "monthly", priority: "0.8" },
   ];
 
   const articlePages: SitemapEntry[] = listArticleIds().map((id) => ({

@@ -15,6 +15,8 @@ export interface SEOConfig {
  * - hreflang (en-SG, x-default)
  * - optional BreadcrumbList JSON-LD via BaseLayout `breadcrumbItems`
  * - per-page JSON-LD via <script type="application/ld+json"> in the page
+ *   (e.g. WebPage + DefinedTermSet on /definitions, same pattern as
+ *   label-reading-context and category overview pages)
  *
  * BaseLayout optional props:
  * - ogImage: override default OG/Twitter image (absolute URL)

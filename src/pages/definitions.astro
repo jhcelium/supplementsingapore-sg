@@ -1,0 +1,23 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import SupplementDefinitions, { seoConfig, definedTermSetJsonLd } from "../components/SupplementDefinitions";
+
+const webPageJsonLd = JSON.stringify(seoConfig.jsonLd);
+const termSetJsonLd = JSON.stringify(definedTermSetJsonLd);
+---
+<BaseLayout
+  fullTitle={seoConfig.title}
+  description={seoConfig.description}
+  path="/definitions"
+  breadcrumbItems={[
+    { name: "Home", path: "" },
+    { name: "Definitions", path: "/definitions" },
+  ]}
+>
+  <script type="application/ld+json" set:html={webPageJsonLd}></script>
+  <script type="application/ld+json" set:html={termSetJsonLd}></script>
+
+  <h1>Supplements Singapore: Key Definitions</h1>
+
+  <SupplementDefinitions />
+</BaseLayout>
