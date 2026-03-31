@@ -1,6 +1,6 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
-import SupplementDefinitions, { seoConfig, definedTermSetJsonLd } from "../components/SupplementDefinitions";
+import Definitions, { seoConfig, definedTermSetJsonLd } from "./_Definitions";
 
 const webPageJsonLd = JSON.stringify(seoConfig.jsonLd);
 const termSetJsonLd = JSON.stringify(definedTermSetJsonLd);
@@ -17,7 +17,7 @@ const termSetJsonLd = JSON.stringify(definedTermSetJsonLd);
   <script type="application/ld+json" set:html={webPageJsonLd}></script>
   <script type="application/ld+json" set:html={termSetJsonLd}></script>
 
-  <h1>Supplements Singapore: Key Definitions</h1>
+  <h1>Supplements Singapore: Definitions</h1>
 
-  <SupplementDefinitions />
+  <Definitions />
 </BaseLayout>
