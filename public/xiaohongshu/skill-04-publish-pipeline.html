@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>SKILL 04 — 小红书发布流水线</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:#f7f8fa;font-family:-apple-system,"PingFang SC","Helvetica Neue",sans-serif;color:#222;min-height:100vh;padding:32px 16px 60px}
+.container{max-width:760px;margin:0 auto}
+
+.skill-header{background:linear-gradient(135deg,#0ea5e9,#06b6d4);border-radius:20px;padding:28px 28px 24px;color:#fff;margin-bottom:24px;box-shadow:0 8px 32px rgba(14,165,233,.25)}
+.skill-badge{display:inline-block;background:rgba(255,255,255,.2);padding:4px 14px;border-radius:20px;font-size:12px;font-weight:700;letter-spacing:1px;margin-bottom:12px}
+.skill-header h1{font-size:24px;font-weight:800;line-height:1.3;margin-bottom:8px}
+.skill-header p{font-size:14px;opacity:.88;line-height:1.6}
+
+.section{background:#fff;border-radius:16px;padding:22px 24px;margin-bottom:16px;box-shadow:0 2px 12px rgba(0,0,0,.06)}
+.section-title{font-size:15px;font-weight:700;color:#111;margin-bottom:14px;display:flex;align-items:center;gap:8px}
+.section-title .icon{font-size:18px}
+
+input[type=text],input[type=number],textarea,select{width:100%;border:1.5px solid #e5e7eb;border-radius:10px;padding:10px 14px;font-size:14px;font-family:inherit;color:#333;outline:none;transition:border-color .2s;background:#fff}
+input:focus,textarea:focus,select:focus{border-color:#0ea5e9}
+input::placeholder,textarea::placeholder{color:#aaa}
+textarea{min-height:90px;resize:vertical}
+label{display:block;font-size:13px;font-weight:600;color:#555;margin-bottom:6px;margin-top:14px}
+label:first-child{margin-top:0}
+
+/* pipeline flow */
+.pipeline{display:flex;flex-direction:column;gap:0}
+.phase{border-left:3px solid #0ea5e9;padding-left:16px;padding-bottom:20px;position:relative}
+.phase:last-child{padding-bottom:0}
+.phase::before{content:'';width:12px;height:12px;background:#0ea5e9;border-radius:50%;position:absolute;left:-8px;top:2px}
+.phase-title{font-size:14px;font-weight:700;color:#0ea5e9;margin-bottom:8px}
+.phase-steps{display:flex;flex-direction:column;gap:6px}
+.phase-step{font-size:13px;color:#555;line-height:1.5;padding:6px 10px;background:#f0f9ff;border-radius:8px}
+.phase-step strong{color:#0284c7}
+
+/* schedule builder */
+.schedule-grid{display:grid;gap:10px}
+.schedule-row{display:grid;grid-template-columns:120px 1fr 1fr;gap:8px;align-items:center}
+.schedule-row .day-label{font-size:13px;font-weight:600;color:#444;text-align:right}
+.schedule-row select,.schedule-row input{padding:8px 10px;font-size:13px}
+
+/* checklist */
+.checklist{display:flex;flex-direction:column;gap:8px}
+.check-group{background:#f8fafc;border-radius:10px;padding:14px 16px}
+.check-group h4{font-size:13px;font-weight:700;color:#0284c7;margin-bottom:8px}
+.check-item{display:flex;align-items:flex-start;gap:10px;margin-bottom:6px}
+.check-item:last-child{margin-bottom:0}
+.check-item input[type=checkbox]{width:16px;height:16px;margin-top:2px;accent-color:#0ea5e9;flex-shrink:0;cursor:pointer}
+.check-item label{font-size:13px;color:#444;line-height:1.5;cursor:pointer;margin:0}
+
+/* time slots */
+.time-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:8px}
+.time-card{border:1.5px solid #e5e7eb;border-radius:10px;padding:10px 12px;cursor:pointer;transition:all .2s}
+.time-card:hover,.time-card.active{border-color:#0ea5e9;background:#f0f9ff}
+.time-card h4{font-size:12px;font-weight:700;color:#0284c7;margin-bottom:3px}
+.time-card p{font-size:11px;color:#666}
+
+/* comparison table */
+.compare-table{width:100%;border-collapse:collapse;font-size:13px}
+.compare-table th{background:#f0f9ff;color:#0284c7;font-weight:700;padding:10px 12px;text-align:left;border-bottom:2px solid #bae6fd}
+.compare-table td{padding:9px 12px;border-bottom:1px solid #f0f4f8;color:#444;line-height:1.5}
+.compare-table tr:last-child td{border-bottom:none}
+.compare-table td:first-child{font-weight:600;color:#111}
+.compare-table .highlight{color:#0284c7;font-weight:700}
+
+.btn-run{width:100%;padding:14px;background:#0ea5e9;color:#fff;border:none;border-radius:12px;font-size:16px;font-weight:700;cursor:pointer;transition:background .2s;margin-top:8px;letter-spacing:.5px}
+.btn-run:hover{background:#0284c7}
+.btn-run:active{transform:scale(.98)}
+.btn-secondary{background:#fff;color:#0ea5e9;border:2px solid #0ea5e9}
+.btn-secondary:hover{background:#f0f9ff}
+
+.note{background:#fffbe6;border:1px solid #ffe58f;border-radius:10px;padding:12px 16px;font-size:13px;color:#886a00;line-height:1.6}
+.note strong{color:#b8860b}
+
+.count-badge{display:inline-block;background:#0ea5e9;color:#fff;border-radius:20px;padding:2px 10px;font-size:12px;font-weight:700;margin-left:8px}
+
+.progress-bar{background:#e5e7eb;border-radius:20px;height:8px;margin-top:8px}
+.progress-fill{background:linear-gradient(90deg,#0ea5e9,#06b6d4);border-radius:20px;height:8px;transition:width .3s}
+
+@media(max-width:500px){.schedule-row{grid-template-columns:80px 1fr};.time-grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="container">
+
+<div class="skill-header">
+  <div class="skill-badge">SKILL 04</div>
+  <h1>🚀 小红书发布流水线</h1>
+  <p>整合 RSS 监控 + 文章改编的完整工作流。从 OPML/文章列表到发布就绪，批量生成发布队列和每篇笔记的发布清单。</p>
+</div>
+
+<!-- 输入配置 -->
+<div class="section">
+  <div class="section-title"><span class="icon">⚙️</span>流水线配置</div>
+
+  <label>输入来源（OPML 路径 / 文章 URL 列表）</label>
+  <textarea id="inputSource" placeholder="粘贴以下任意一种：
+• OPML 文件路径：/Users/xxx/Downloads/inoreader.opml
+• 文章 URL 列表（每行一个）
+• 或直接说明：本周需要 3 篇内容"></textarea>
+
+  <label>本批次笔记数量</label>
+  <input type="number" id="noteCount" value="3" min="1" max="10"/>
+
+  <label>发布起始日期</label>
+  <input type="text" id="startDate" placeholder="如：2026-03-23"/>
+
+  <label>内容类型偏好（多选）</label>
+  <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:6px" id="typeSelector">
+    <label style="margin:0;display:flex;align-items:center;gap:5px;font-weight:400;cursor:pointer"><input type="checkbox" checked style="accent-color:#0ea5e9;width:14px;height:14px"> 科普型</label>
+    <label style="margin:0;display:flex;align-items:center;gap:5px;font-weight:400;cursor:pointer"><input type="checkbox" checked style="accent-color:#0ea5e9;width:14px;height:14px"> 避坑型</label>
+    <label style="margin:0;display:flex;align-items:center;gap:5px;font-weight:400;cursor:pointer"><input type="checkbox" style="accent-color:#0ea5e9;width:14px;height:14px"> 测评型</label>
+    <label style="margin:0;display:flex;align-items:center;gap:5px;font-weight:400;cursor:pointer"><input type="checkbox" style="accent-color:#0ea5e9;width:14px;height:14px"> 研究报道型</label>
+    <label style="margin:0;display:flex;align-items:center;gap:5px;font-weight:400;cursor:pointer"><input type="checkbox" style="accent-color:#0ea5e9;width:14px;height:14px"> 选购指南型</label>
+  </div>
+</div>
+
+<!-- 发布时段选择 -->
+<div class="section">
+  <div class="section-title"><span class="icon">⏰</span>推荐发布时段（新加坡时区 SGT）</div>
+  <div class="time-grid">
+    <div class="time-card active" onclick="toggleTime(this)">
+      <h4>工作日午休</h4>
+      <p>12:00–13:00 小红书高峰</p>
+    </div>
+    <div class="time-card active" onclick="toggleTime(this)">
+      <h4>工作日晚间</h4>
+      <p>19:00–21:00 最高活跃</p>
+    </div>
+    <div class="time-card" onclick="toggleTime(this)">
+      <h4>周末上午</h4>
+      <p>10:00–11:00 休闲刷屏</p>
+    </div>
+    <div class="time-card" onclick="toggleTime(this)">
+      <h4>周末晚间</h4>
+      <p>20:00–21:00 周末高峰</p>
+    </div>
+  </div>
+  <div style="margin-top:10px;font-size:12px;color:#888">发布间隔：工作日至少间隔1天 · 同话题笔记至少间隔3天</div>
+</div>
+
+<!-- 流水线阶段 -->
+<div class="section">
+  <div class="section-title"><span class="icon">🔄</span>流水线阶段</div>
+  <div class="pipeline">
+    <div class="phase">
+      <div class="phase-title">阶段一：内容发现</div>
+      <div class="phase-steps">
+        <div class="phase-step"><strong>1.1</strong> 加载 OPML，解析所有 RSS 订阅 URL</div>
+        <div class="phase-step"><strong>1.2</strong> WebFetch 抓取近30天最新文章（标题/链接/日期/来源）</div>
+        <div class="phase-step"><strong>1.3</strong> 初步筛选：保留补充剂/营养/健康趋势，剔除医疗广告</div>
+      </div>
+    </div>
+    <div class="phase">
+      <div class="phase-title">阶段二：内容评估与排序</div>
+      <div class="phase-steps">
+        <div class="phase-step"><strong>2.1</strong> 四维评分：小红书适配度 / 新加坡相关性 / 改编难度 / 话题热度（各1-5分）</div>
+        <div class="phase-step"><strong>2.2</strong> 选定批次文章：话题多样化 + 类型均衡 + 时效性优先</div>
+      </div>
+    </div>
+    <div class="phase">
+      <div class="phase-title">阶段三：批量改编</div>
+      <div class="phase-steps">
+        <div class="phase-step"><strong>3.X.1</strong> 抓取每篇原文完整内容</div>
+        <div class="phase-step"><strong>3.X.2</strong> 提炼3-5个核心要点（口语化）</div>
+        <div class="phase-step"><strong>3.X.3</strong> 生成笔记：3个备选标题 + 完整正文 + 15-20标签 + 配图建议</div>
+        <div class="phase-step"><strong>3.X.4</strong> 逐篇合规检查</div>
+      </div>
+    </div>
+    <div class="phase">
+      <div class="phase-title">阶段四：发布队列生成</div>
+      <div class="phase-steps">
+        <div class="phase-step"><strong>4.1</strong> 按高活跃时段自动排期，生成完整发布日历</div>
+        <div class="phase-step"><strong>4.2</strong> 为每篇生成独立发布 checklist（内容准备/发布前/发布后）</div>
+      </div>
+    </div>
+    <div class="phase">
+      <div class="phase-title">阶段五：完整报告输出</div>
+      <div class="phase-steps">
+        <div class="phase-step"><strong>5.1</strong> 汇总所有笔记内容 + 发布排期总览 + 每篇清单</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 发布 Checklist -->
+<div class="section">
+  <div class="section-title"><span class="icon">✅</span>发布 Checklist 模板</div>
+  <div class="checklist">
+    <div class="check-group">
+      <h4>📝 内容准备</h4>
+      <div class="check-item"><input type="checkbox" id="c1"><label for="c1">正文已定稿，标题已选定</label></div>
+      <div class="check-item"><input type="checkbox" id="c2"><label for="c2">话题标签已复制（15-20个）</label></div>
+      <div class="check-item"><input type="checkbox" id="c3"><label for="c3">配图已准备（5张，封面3:4比例）</label></div>
+      <div class="check-item"><input type="checkbox" id="c4"><label for="c4">封面图文字已添加</label></div>
+    </div>
+    <div class="check-group">
+      <h4>🔍 发布前检查</h4>
+      <div class="check-item"><input type="checkbox" id="c5"><label for="c5">无医疗声明（无"治愈/治疗/处方"）</label></div>
+      <div class="check-item"><input type="checkbox" id="c6"><label for="c6">无绝对化表述（无"一定/绝对/100%"）</label></div>
+      <div class="check-item"><input type="checkbox" id="c7"><label for="c7">数据来源已核实（标注PubMed等）</label></div>
+      <div class="check-item"><input type="checkbox" id="c8"><label for="c8">"内容仅供参考，非医疗建议"已添加</label></div>
+    </div>
+    <div class="check-group">
+      <h4>📊 发布后操作</h4>
+      <div class="check-item"><input type="checkbox" id="c9"><label for="c9">发布成功截图存档</label></div>
+      <div class="check-item"><input type="checkbox" id="c10"><label for="c10">记录发布时间和初始数据</label></div>
+      <div class="check-item"><input type="checkbox" id="c11"><label for="c11">24小时后检查数据（点赞/收藏/评论）</label></div>
+      <div class="check-item"><input type="checkbox" id="c12"><label for="c12">72小时后评估是否追加互动</label></div>
+    </div>
+  </div>
+  <button class="btn-run btn-secondary" onclick="resetChecklist()" style="margin-top:10px;padding:10px">🔄 重置清单</button>
+</div>
+
+<!-- 与其他技能对比 -->
+<div class="section">
+  <div class="section-title"><span class="icon">🔀</span>与其他技能配合使用</div>
+  <table class="compare-table">
+    <thead><tr><th>场景</th><th>建议使用</th></tr></thead>
+    <tbody>
+      <tr><td>只想抓取内容，不改编</td><td>SKILL 01 — RSS 监控</td></tr>
+      <tr><td>已有文章链接，只需改编</td><td>SKILL 03 — 文章改编</td></tr>
+      <tr><td>从头到尾全流程</td><td class="highlight">SKILL 04 — 发布流水线（本技能）</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<button class="btn-run" onclick="copyPrompt()">🚀 生成完整流水线指令并复制</button>
+
+<div class="note" style="margin-top:16px">
+  <strong>📌 建议：</strong>每次批量处理3-5篇（避免质量下降）。OPML订阅源超过50个时，建议先用SKILL 01筛选后再传入。所有内容需人工最终审核后发布。
+</div>
+
+</div>
+
+<script>
+function toggleTime(el) {
+  el.classList.toggle('active');
+}
+
+function resetChecklist() {
+  document.querySelectorAll('.check-item input[type=checkbox]').forEach(cb => cb.checked = false);
+}
+
+function getSelectedTypes() {
+  const labels = document.querySelectorAll('#typeSelector label');
+  const types = [];
+  labels.forEach(label => {
+    if (label.querySelector('input').checked) types.push(label.textContent.trim());
+  });
+  return types.join('、') || '科普型、避坑型';
+}
+
+function copyPrompt() {
+  const source = document.getElementById('inputSource').value.trim();
+  const count = document.getElementById('noteCount').value || '3';
+  const startDate = document.getElementById('startDate').value.trim() || '本周一';
+  const types = getSelectedTypes();
+  const activeTimes = [...document.querySelectorAll('.time-card.active')].map(c => c.querySelector('h4').textContent).join('、') || '工作日晚间19:00-21:00';
+
+  const src = source || '请使用默认健康类 RSS 源进行测试';
+
+  const prompt = `请运行小红书完整发布流水线（SKILL 04）。
+
+输入来源：
+${src}
+
+配置参数：
+- 本批次笔记数量：${count} 篇
+- 发布起始日期：${startDate}
+- 内容类型偏好：${types}
+- 发布时段：${activeTimes}（新加坡时区 SGT）
+
+请按以下五个阶段完整执行：
+
+阶段一：内容发现
+- 解析 OPML 或直接处理提供的文章 URL
+- 抓取近30天最新文章，筛选健康/补充剂相关内容
+- 输出候选文章清单（10-20篇）
+
+阶段二：内容评估
+- 四维评分（小红书适配度/新加坡相关性/改编难度/话题热度）
+- 选定 ${count} 篇：话题多样化 + 类型均衡（${types}）
+
+阶段三：批量改编
+- 每篇文章：抓取原文 → 提炼要点 → 生成完整笔记（3备选标题+正文+标签+配图建议）→ 合规检查
+
+阶段四：发布队列
+- 按 ${activeTimes} 时段排期
+- 为每篇生成独立发布 checklist
+
+阶段五：完整报告
+- 汇总所有笔记 + 发布排期总览
+
+请完整输出所有笔记内容和发布清单。`;
+
+  navigator.clipboard.writeText(prompt).then(() => {
+    const btn = document.querySelector('.btn-run:not(.btn-secondary)');
+    btn.textContent = '✅ 指令已复制！粘贴到 Claude 执行完整流水线';
+    btn.style.background = '#07c160';
+    setTimeout(() => {
+      btn.textContent = '🚀 生成完整流水线指令并复制';
+      btn.style.background = '';
+    }, 3000);
+  });
+}
+</script>
+</body>
+</html>

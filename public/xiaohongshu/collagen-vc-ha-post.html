@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>小红书预览 — 胶原蛋白+VC+玻尿酸</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: #f5f5f5;
+      font-family: -apple-system, "PingFang SC", "Helvetica Neue", sans-serif;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 24px 16px 60px;
+    }
+
+    /* ── 顶部操作栏 ── */
+    .toolbar {
+      width: 100%;
+      max-width: 480px;
+      display: flex;
+      gap: 10px;
+      margin-bottom: 16px;
+    }
+    .btn {
+      flex: 1;
+      padding: 11px 0;
+      border: none;
+      border-radius: 24px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all .18s;
+      letter-spacing: .3px;
+    }
+    .btn-primary {
+      background: #ff2442;
+      color: #fff;
+    }
+    .btn-primary:hover { background: #e0102e; }
+    .btn-secondary {
+      background: #fff;
+      color: #ff2442;
+      border: 1.5px solid #ff2442;
+    }
+    .btn-secondary:hover { background: #fff0f2; }
+    .btn.copied {
+      background: #07c160 !important;
+      color: #fff !important;
+      border-color: #07c160 !important;
+    }
+
+    /* ── 手机外壳 ── */
+    .phone-shell {
+      width: 100%;
+      max-width: 390px;
+      background: #fff;
+      border-radius: 40px;
+      box-shadow: 0 20px 60px rgba(0,0,0,.18);
+      overflow: hidden;
+      position: relative;
+    }
+
+    /* 顶部状态栏 */
+    .status-bar {
+      background: #fff;
+      padding: 14px 24px 6px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 12px;
+      font-weight: 600;
+      color: #111;
+    }
+    .status-icons { display: flex; gap: 5px; align-items: center; }
+
+    /* 小红书顶部导航 */
+    .xhs-nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 8px 16px 10px;
+      border-bottom: 1px solid #f0f0f0;
+    }
+    .xhs-nav .back { font-size: 20px; color: #333; cursor: pointer; }
+    .xhs-nav .nav-title { font-size: 16px; font-weight: 600; color: #111; }
+    .xhs-nav .more { font-size: 20px; color: #333; }
+
+    /* 用户信息行 */
+    .user-row {
+      display: flex;
+      align-items: center;
+      padding: 14px 16px 10px;
+      gap: 10px;
+    }
+    .avatar {
+      width: 40px; height: 40px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #ff6b8a, #ff2442);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 18px; flex-shrink: 0;
+    }
+    .user-info { flex: 1; }
+    .username { font-size: 14px; font-weight: 600; color: #111; }
+    .post-time { font-size: 12px; color: #999; margin-top: 2px; }
+    .follow-btn {
+      padding: 6px 18px;
+      border: 1.5px solid #ff2442;
+      border-radius: 20px;
+      color: #ff2442;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      background: transparent;
+    }
+
+    /* 图片占位 */
+    .cover-image {
+      width: 100%;
+      aspect-ratio: 3/4;
+      background: linear-gradient(160deg, #fff5f7 0%, #ffe0e6 40%, #ffd6e8 100%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      color: #cc2244;
+      position: relative;
+      overflow: hidden;
+    }
+    .cover-image::before {
+      content: '';
+      position: absolute;
+      top: -30px; right: -30px;
+      width: 160px; height: 160px;
+      background: rgba(255,36,66,.08);
+      border-radius: 50%;
+    }
+    .cover-image::after {
+      content: '';
+      position: absolute;
+      bottom: -40px; left: -20px;
+      width: 200px; height: 200px;
+      background: rgba(255,36,66,.06);
+      border-radius: 50%;
+    }
+    .cover-emoji { font-size: 56px; z-index: 1; }
+    .cover-title {
+      font-size: 22px;
+      font-weight: 800;
+      color: #cc1133;
+      text-align: center;
+      line-height: 1.35;
+      padding: 0 24px;
+      z-index: 1;
+    }
+    .cover-sub {
+      font-size: 13px;
+      color: #e05070;
+      z-index: 1;
+      background: rgba(255,255,255,.7);
+      padding: 4px 14px;
+      border-radius: 20px;
+    }
+    /* 图片指示点 */
+    .image-dots {
+      display: flex;
+      justify-content: center;
+      gap: 5px;
+      padding: 8px 0 4px;
+    }
+    .dot {
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: #ddd;
+    }
+    .dot.active { background: #ff2442; width: 16px; border-radius: 3px; }
+
+    /* 正文区域 */
+    .post-body {
+      padding: 14px 16px 0;
+    }
+    .post-title {
+      font-size: 17px;
+      font-weight: 700;
+      color: #111;
+      line-height: 1.4;
+      margin-bottom: 12px;
+    }
+    .post-content {
+      font-size: 15px;
+      color: #333;
+      line-height: 1.75;
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+    .post-content .highlight {
+      color: #ff2442;
+      font-weight: 600;
+    }
+
+    /* 话题标签 */
+    .tags-area {
+      padding: 14px 16px 10px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+    .tag {
+      font-size: 13px;
+      color: #1677ff;
+      background: #f0f6ff;
+      padding: 3px 10px;
+      border-radius: 14px;
+      cursor: pointer;
+    }
+
+    /* 互动栏 */
+    .action-bar {
+      display: flex;
+      align-items: center;
+      padding: 12px 16px 16px;
+      border-top: 1px solid #f5f5f5;
+      gap: 18px;
+    }
+    .action-item {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 14px;
+      color: #666;
+      cursor: pointer;
+    }
+    .action-item.liked .icon { color: #ff2442; }
+    .action-item.saved .icon { color: #ffaa00; }
+    .icon { font-size: 20px; }
+    .action-item:last-child { margin-left: auto; }
+
+    /* 底部提示 */
+    .note-bar {
+      width: 100%;
+      max-width: 480px;
+      margin-top: 16px;
+      background: #fffbe6;
+      border: 1px solid #ffe58f;
+      border-radius: 12px;
+      padding: 12px 16px;
+      font-size: 13px;
+      color: #886a00;
+      line-height: 1.6;
+    }
+    .note-bar strong { color: #b8860b; }
+
+    /* toast 提示 */
+    .toast {
+      position: fixed;
+      bottom: 80px;
+      left: 50%;
+      transform: translateX(-50%) translateY(20px);
+      background: rgba(0,0,0,.75);
+      color: #fff;
+      padding: 10px 24px;
+      border-radius: 24px;
+      font-size: 14px;
+      opacity: 0;
+      transition: all .3s;
+      pointer-events: none;
+      white-space: nowrap;
+      z-index: 999;
+    }
+    .toast.show {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+    }
+  </style>
+</head>
+<body>
+
+<!-- 操作按钮 -->
+<div class="toolbar">
+  <button class="btn btn-primary" onclick="copyBody()">📋 一键复制正文</button>
+  <button class="btn btn-secondary" onclick="copyTags()">🏷️ 复制标签</button>
+</div>
+
+<!-- 手机预览 -->
+<div class="phone-shell">
+
+  <!-- 状态栏 -->
+  <div class="status-bar">
+    <span>9:41</span>
+    <div class="status-icons">
+      <span>●●●</span>
+      <span>WiFi</span>
+      <span>🔋</span>
+    </div>
+  </div>
+
+  <!-- 顶部导航 -->
+  <div class="xhs-nav">
+    <span class="back">‹</span>
+    <span class="nav-title">笔记详情</span>
+    <span class="more">···</span>
+  </div>
+
+  <!-- 用户信息 -->
+  <div class="user-row">
+    <div class="avatar">🌿</div>
+    <div class="user-info">
+      <div class="username">新加坡保健研究所</div>
+      <div class="post-time">刚刚 · 新加坡</div>
+    </div>
+    <button class="follow-btn">+ 关注</button>
+  </div>
+
+  <!-- 封面图 -->
+  <div class="cover-image">
+    <div class="cover-emoji">✨💊🌿</div>
+    <div class="cover-title">胶原蛋白+VC+玻尿酸<br>缺一不可</div>
+    <div class="cover-sub">吃对了才有效！</div>
+  </div>
+  <div class="image-dots">
+    <div class="dot active"></div>
+    <div class="dot"></div>
+    <div class="dot"></div>
+    <div class="dot"></div>
+    <div class="dot"></div>
+  </div>
+
+  <!-- 正文 -->
+  <div class="post-body">
+    <div class="post-title">胶原蛋白吃了没用？可能少了这两个搭档</div>
+    <div class="post-content" id="postContent">最近刷到好几篇皮肤营养学的外网研究，
+发现一件很多人都做错的事——
+
+💬 花大钱买胶原蛋白，却没搭对"队友"。
+
+—
+
+【为什么单补胶原蛋白不够？】
+
+胶原蛋白是皮肤弹性和紧致度的核心结构蛋白，
+但它在体内"合成"需要两个关键帮手 👇
+
+💡 帮手1：维生素C（Vitamin C）
+VC 是胶原蛋白合成的"触发器"——没有它，
+身体根本无法把胶原蛋白原料正确组装起来。
+更关键的是：口服 VC 能直接进入血液输送到皮肤层，
+效果远比外用精华渗透深得多。
+
+💡 帮手2：玻尿酸（Hyaluronic Acid）
+玻尿酸就像皮肤里的"天然蓄水池"，
+每个分子可以锁住自身重量1000倍的水分。
+但问题是——我们从25岁开始就在流失它，
+到50岁时，体内玻尿酸已经消耗了整整一半 😱
+
+—
+
+【研究怎么说？3个数据记住就够】
+
+✅ 每天补充 5g 胶原蛋白肽 + 80mg VC，
+   持续16周后：皮肤真皮密度明显提升，
+   细纹数量显著减少
+
+✅ 6周鱼胶原实验：
+   皮肤含水量 +23%，弹性 +24%，皱纹深度 -9%
+
+✅ 口服玻尿酸推荐剂量 120-200mg/天，
+   最快4周见效，12周效果最明显
+
+（以上数据来源：PubMed 临床随机对照双盲研究）
+
+—
+
+【三合一到底怎么吃？】
+
+🌿 早上空腹或随餐服用效果最稳定
+💊 组合建议：胶原蛋白肽 + VC + 玻尿酸
+⏱️ 坚持至少 8-12 周才能看到明显变化
+🚫 不要今天吃三天停——断断续续效果大打折扣
+
+—
+
+【新加坡在哪里买？】
+
+本地 Guardian、Watsons 都有卖单品，
+不过三合一复合配方可以在 iHerb SG 或
+Lazada / Shopee 搜"collagen peptides HA vitamin C"
+
+参考价格区间 SGD：
+- 基础款胶原蛋白粉：$25–$45/月
+- 三合一复合胶囊：$35–$60/月
+- 日本品牌含量更高的版本：$50–$80/月
+
+—
+
+⚠️ 以上内容仅供参考，非医疗建议。
+孕期哺乳期或正在服药请先咨询医生。
+
+你们现在有在补充胶原蛋白吗？
+用的是哪个品牌？评论区聊聊 👇
+觉得有帮助记得收藏⭐，下次找得到！</div>
+  </div>
+
+  <!-- 话题标签 -->
+  <div class="tags-area" id="tagsArea">
+    <span class="tag">#新加坡保健品</span>
+    <span class="tag">#新加坡养生</span>
+    <span class="tag">#保健品推荐</span>
+    <span class="tag">#健康干货</span>
+    <span class="tag">#SG生活</span>
+    <span class="tag">#胶原蛋白</span>
+    <span class="tag">#玻尿酸</span>
+    <span class="tag">#维生素C</span>
+    <span class="tag">#美白保养</span>
+    <span class="tag">#抗衰老</span>
+    <span class="tag">#皮肤保养</span>
+    <span class="tag">#由内而外美容</span>
+    <span class="tag">#口服美容</span>
+    <span class="tag">#胶原蛋白肽</span>
+    <span class="tag">#30+保养</span>
+    <span class="tag">#新加坡妈妈</span>
+    <span class="tag">#上班族养生</span>
+    <span class="tag">#护肤成分</span>
+    <span class="tag">#iHerbSG</span>
+    <span class="tag">#Guardian新加坡</span>
+  </div>
+
+  <!-- 互动栏 -->
+  <div class="action-bar">
+    <div class="action-item liked">
+      <span class="icon">❤️</span>
+      <span>2.4k</span>
+    </div>
+    <div class="action-item saved">
+      <span class="icon">⭐</span>
+      <span>3.1k</span>
+    </div>
+    <div class="action-item">
+      <span class="icon">💬</span>
+      <span>186</span>
+    </div>
+    <div class="action-item">
+      <span class="icon">↗️</span>
+    </div>
+  </div>
+
+</div><!-- /phone-shell -->
+
+<!-- 使用提示 -->
+<div class="note-bar">
+  <strong>📌 发布步骤：</strong><br>
+  1. 点击「一键复制正文」→ 粘贴到小红书发布框<br>
+  2. 点击「复制标签」→ 追加到正文末尾<br>
+  3. 上传 5 张配图（封面用 3:4 比例）<br>
+  4. 计划发布时间：<strong>2026-03-23 周一 20:00 SGT</strong>
+</div>
+
+<!-- Toast -->
+<div class="toast" id="toast"></div>
+
+<script>
+  function showToast(msg) {
+    const t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    setTimeout(() => t.classList.remove('show'), 2200);
+  }
+
+  function copyBody() {
+    const text = document.getElementById('postContent').innerText;
+    navigator.clipboard.writeText(text).then(() => {
+      const btn = event.target;
+      btn.textContent = '✅ 已复制正文！';
+      btn.classList.add('copied');
+      showToast('正文已复制，可直接粘贴到小红书 🎉');
+      setTimeout(() => {
+        btn.textContent = '📋 一键复制正文';
+        btn.classList.remove('copied');
+      }, 2500);
+    }).catch(() => {
+      showToast('请手动选择正文复制');
+    });
+  }
+
+  function copyTags() {
+    const tags = [...document.querySelectorAll('#tagsArea .tag')]
+      .map(t => t.textContent)
+      .join(' ');
+    navigator.clipboard.writeText(tags).then(() => {
+      const btn = event.target;
+      btn.textContent = '✅ 已复制标签！';
+      btn.classList.add('copied');
+      showToast('标签已复制，追加到正文末尾即可 🏷️');
+      setTimeout(() => {
+        btn.textContent = '🏷️ 复制标签';
+        btn.classList.remove('copied');
+      }, 2500);
+    }).catch(() => {
+      showToast('请手动选择标签复制');
+    });
+  }
+</script>
+</body>
+</html>

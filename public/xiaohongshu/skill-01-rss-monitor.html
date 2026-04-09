@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>SKILL 01 — 小红书 RSS 内容监控</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:#f7f8fa;font-family:-apple-system,"PingFang SC","Helvetica Neue",sans-serif;color:#222;min-height:100vh;padding:32px 16px 60px}
+.container{max-width:760px;margin:0 auto}
+
+/* header */
+.skill-header{background:linear-gradient(135deg,#ff6b35,#ff2442);border-radius:20px;padding:28px 28px 24px;color:#fff;margin-bottom:24px;box-shadow:0 8px 32px rgba(255,36,66,.25)}
+.skill-badge{display:inline-block;background:rgba(255,255,255,.2);padding:4px 14px;border-radius:20px;font-size:12px;font-weight:700;letter-spacing:1px;margin-bottom:12px}
+.skill-header h1{font-size:24px;font-weight:800;line-height:1.3;margin-bottom:8px}
+.skill-header p{font-size:14px;opacity:.88;line-height:1.6}
+
+/* input section */
+.section{background:#fff;border-radius:16px;padding:22px 24px;margin-bottom:16px;box-shadow:0 2px 12px rgba(0,0,0,.06)}
+.section-title{font-size:15px;font-weight:700;color:#111;margin-bottom:14px;display:flex;align-items:center;gap:8px}
+.section-title .icon{font-size:18px}
+
+textarea{width:100%;min-height:100px;border:1.5px solid #e5e7eb;border-radius:10px;padding:12px 14px;font-size:14px;font-family:inherit;color:#333;resize:vertical;outline:none;transition:border-color .2s}
+textarea:focus{border-color:#ff2442}
+textarea::placeholder{color:#aaa}
+
+/* steps */
+.steps{counter-reset:step}
+.step{display:flex;gap:14px;margin-bottom:18px;align-items:flex-start}
+.step-num{width:28px;height:28px;border-radius:50%;background:#ff2442;color:#fff;font-size:13px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px}
+.step-body h3{font-size:14px;font-weight:700;color:#111;margin-bottom:4px}
+.step-body p{font-size:13px;color:#555;line-height:1.6}
+
+/* filter criteria */
+.criteria-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.criteria-card{background:#fff5f6;border:1px solid #ffe0e5;border-radius:10px;padding:12px 14px}
+.criteria-card h4{font-size:13px;font-weight:700;color:#cc1133;margin-bottom:6px}
+.criteria-card ul{list-style:none;padding:0}
+.criteria-card li{font-size:12px;color:#555;padding:3px 0;padding-left:14px;position:relative;line-height:1.5}
+.criteria-card li::before{content:"✓";position:absolute;left:0;color:#ff2442;font-weight:700}
+
+/* output format */
+.output-box{background:#1e1e2e;border-radius:12px;padding:18px 20px;font-family:"SF Mono","Fira Code",monospace;font-size:13px;color:#cdd6f4;line-height:1.7;overflow-x:auto}
+.output-box .comment{color:#6c7086}
+.output-box .highlight{color:#a6e3a1}
+.output-box .label{color:#89b4fa}
+
+/* tags */
+.tag-row{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+.tag{background:#fff0f2;color:#ff2442;border:1px solid #ffd0d7;padding:4px 12px;border-radius:20px;font-size:12px;font-weight:600}
+.tag.blue{background:#f0f6ff;color:#1677ff;border-color:#c5d9f7}
+.tag.green{background:#f0faf4;color:#16a34a;border-color:#bbf7d0}
+
+/* run button */
+.btn-run{width:100%;padding:14px;background:#ff2442;color:#fff;border:none;border-radius:12px;font-size:16px;font-weight:700;cursor:pointer;transition:background .2s;margin-top:8px;letter-spacing:.5px}
+.btn-run:hover{background:#e0102e}
+.btn-run:active{transform:scale(.98)}
+
+/* note */
+.note{background:#fffbe6;border:1px solid #ffe58f;border-radius:10px;padding:12px 16px;font-size:13px;color:#886a00;line-height:1.6}
+.note strong{color:#b8860b}
+
+@media(max-width:500px){.criteria-grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="container">
+
+<div class="skill-header">
+  <div class="skill-badge">SKILL 01</div>
+  <h1>📡 小红书 RSS 内容监控</h1>
+  <p>从 Inoreader OPML 导出文件或 RSS 链接抓取全球热门健康/保健品文章，筛选出最适合改编为小红书爆款的素材。</p>
+</div>
+
+<!-- 输入区 -->
+<div class="section">
+  <div class="section-title"><span class="icon">📥</span>输入来源（任选一种）</div>
+  <textarea id="inputSource" placeholder="粘贴以下任意一种：
+• OPML 文件路径，如：/Users/xxx/Downloads/inoreader-export.opml
+• RSS 订阅 URL，如：https://examine.com/feed/
+• 多个 URL 每行一个
+• 直接粘贴文章链接批量处理"></textarea>
+  <button class="btn-run" onclick="copyPrompt()">🚀 生成 Claude 指令并复制</button>
+</div>
+
+<!-- 工作流程 -->
+<div class="section">
+  <div class="section-title"><span class="icon">⚙️</span>工作流程</div>
+
+  <div class="step">
+    <div class="step-num">1</div>
+    <div class="step-body">
+      <h3>解析 OPML 文件</h3>
+      <p>读取 OPML XML，提取每个 &lt;outline&gt; 的 title、xmlUrl、htmlUrl，按分类整理订阅源列表。</p>
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="step-num">2</div>
+    <div class="step-body">
+      <h3>抓取 RSS Feed 内容</h3>
+      <p>使用 WebFetch 获取每个 RSS 源的最新文章，重点抓取：健康营养、膳食补充剂、抗衰老、肠道健康、心脑血管健康。</p>
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="step-num">3</div>
+    <div class="step-body">
+      <h3>筛选爆款文章</h3>
+      <p>按内容相关性、改编潜力、时效性三个维度评分，满足3条以上标准的文章优先推荐。</p>
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="step-num">4</div>
+    <div class="step-body">
+      <h3>输出筛选结果</h3>
+      <p>分三级输出：⭐⭐⭐强烈推荐 / ⭐⭐可改编 / ⭐备选，每篇含推荐理由和小红书切入角度。</p>
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="step-num">5</div>
+    <div class="step-body">
+      <h3>生成本周内容计划</h3>
+      <p>根据筛选结果，建议本周发布内容组合和排期。</p>
+    </div>
+  </div>
+</div>
+
+<!-- 筛选标准 -->
+<div class="section">
+  <div class="section-title"><span class="icon">🎯</span>筛选标准（满足3条以上优先推荐）</div>
+  <div class="criteria-grid">
+    <div class="criteria-card">
+      <h4>内容相关性</h4>
+      <ul>
+        <li>与保健品/营养补充剂直接相关</li>
+        <li>与新加坡用户痛点吻合</li>
+        <li>有具体数据或研究结论</li>
+      </ul>
+    </div>
+    <div class="criteria-card">
+      <h4>改编潜力</h4>
+      <ul>
+        <li>有明确结论或观点</li>
+        <li>信息量适中不过于学术</li>
+        <li>无严重医疗声明风险</li>
+      </ul>
+    </div>
+    <div class="criteria-card">
+      <h4>时效性</h4>
+      <ul>
+        <li>近30天内发布（优先）</li>
+        <li>常青内容持续有搜索需求</li>
+      </ul>
+    </div>
+    <div class="criteria-card">
+      <h4>新加坡痛点关键词</h4>
+      <ul>
+        <li>免疫力 / 美白 / 关节</li>
+        <li>精力 / 睡眠 / 肠道</li>
+        <li>抗衰老 / 骨密度</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- 重点监控网站 -->
+<div class="section">
+  <div class="section-title"><span class="icon">🌐</span>重点监控网站</div>
+  <div class="tag-row">
+    <span class="tag">Examine.com</span>
+    <span class="tag">Healthline.com</span>
+    <span class="tag">WebMD.com</span>
+    <span class="tag">NutritionFacts.org</span>
+    <span class="tag blue">PubMed</span>
+    <span class="tag blue">ScienceDaily</span>
+    <span class="tag green">Reddit r/Supplements</span>
+    <span class="tag green">Vitaquest.com</span>
+  </div>
+</div>
+
+<!-- 注意事项 -->
+<div class="note">
+  <strong>📌 注意：</strong>如某 RSS URL 无法访问，自动跳过继续处理。筛选时优先考虑"容易改编"而非"内容最专业"。保留原文链接供后续改编参考，不得直接复制原文。
+</div>
+
+</div><!-- /container -->
+
+<script>
+function copyPrompt() {
+  const input = document.getElementById('inputSource').value.trim();
+  const src = input || '请使用以下默认测试源：https://examine.com/feed/ 和 https://www.healthline.com/rss/nutrition';
+  const prompt = `请运行小红书 RSS 内容监控（SKILL 01）。
+
+输入来源：
+${src}
+
+按以下步骤执行：
+1. 如是 OPML 文件路径，读取并解析所有 RSS 订阅源
+2. 使用 WebFetch 抓取每个 RSS 源最新文章
+3. 按内容相关性、改编潜力、时效性筛选爆款文章
+4. 分三级（⭐⭐⭐/⭐⭐/⭐）输出筛选结果，每篇含推荐理由和小红书切入角度
+5. 生成本周内容计划建议（3篇）
+
+目标用户：新加坡华人，关注免疫力、美白、关节、抗衰老等健康话题。`;
+
+  navigator.clipboard.writeText(prompt).then(() => {
+    const btn = document.querySelector('.btn-run');
+    btn.textContent = '✅ 指令已复制！粘贴到 Claude 对话框执行';
+    btn.style.background = '#07c160';
+    setTimeout(() => {
+      btn.textContent = '🚀 生成 Claude 指令并复制';
+      btn.style.background = '';
+    }, 3000);
+  });
+}
+</script>
+</body>
+</html>
