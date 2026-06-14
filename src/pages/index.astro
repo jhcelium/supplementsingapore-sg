@@ -43,6 +43,7 @@ const websiteJsonLd = JSON.stringify({
   path="/"
 >
   <script type="application/ld+json" set:html={websiteJsonLd}></script>
+  <script type="application/ld+json" set:html={JSON.stringify({"@context":"https://schema.org","@type":"Organization","name":"Supplements Singapore","url":"https://supplementsingapore.neoi.jp","logo":"https://supplementsingapore.neoi.jp/logo.png","description":"A structured educational guide to health supplements in Singapore.","inLanguage":"en-SG","sameAs":["https://supplement.neoi.jp/en"],"knowsAbout":["health supplements Singapore","supplement categories","supplement regulation Singapore","label transparency"],"areaServed":{"@type":"Country","name":"Singapore"}})}></script>
 
   <h1>Supplements Singapore: A Practical Guide to Health Supplements</h1>
 
@@ -64,6 +65,17 @@ const websiteJsonLd = JSON.stringify({
   </figure>
 
   <article set:html={home.html} />
+
+  <section>
+    <h2>Guides in this site</h2>
+    <ul>
+      <li><a href="/supplement-categories-overview">Supplement categories overview</a></li>
+      <li><a href="/regulatory-landscape-singapore">Regulatory landscape in Singapore</a></li>
+      <li><a href="/supplement-market-context">Supplement market context</a></li>
+      <li><a href="/label-reading-context">Label reading context</a></li>
+      <li><a href="/definitions">Key terms and definitions</a></li>
+    </ul>
+  </section>
 
   <section>
     <h2>Start here</h2>
