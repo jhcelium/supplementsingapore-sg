@@ -1,7 +1,7 @@
 ---
-title: HSA Rules for Singapore Supplements
+title: HSA Rules Checklist
 description: "A practical checklist for reading HSA supplement rules in Singapore, from product scope to claim wording and buyer red flags before buying."
-primary_kw: HSA rules for Singapore supplements
+primary_kw: HSA rules checklist
 secondary_kws: ["Singapore supplement rules", "HSA supplement claims", "health supplement checklist Singapore"]
 datePublished: "2026-06-28"
 dateModified: "2026-06-28"
@@ -9,9 +9,9 @@ dateModified: "2026-06-28"
 
 *Written by the Neoi - Health Supplements Singapore editorial team · Last updated: 28 June 2026*
 
-# HSA Rules for Singapore Supplements
+# HSA Rules Checklist
 
-HSA rules for Singapore supplements are best used as a buyer checklist, not as a promise that every bottle on a shelf or marketplace has been pre-approved. This article explains how to read the main public rules in a practical, educational way. It is general information, not medical advice.
+An HSA rules checklist is best used as a Singapore supplement buyer screen, not as a promise that every bottle on a shelf or marketplace has been pre-approved. This article explains how to read the main public rules in a practical, educational way. It is general information, not medical advice.
 
 ## Start with the product scope
 
@@ -65,7 +65,7 @@ For personal health situations, do not use this or any article as a substitute f
 
 ---
 
-This article is general educational information about reading public HSA rules for Singapore supplements. It is not medical advice, diagnosis, treatment, legal advice, or a product recommendation. Official rules and public pages can change, so check the sources directly.
+This article is general educational information about using an HSA rules checklist for Singapore supplements. It is not medical advice, diagnosis, treatment, legal advice, or a product recommendation. Official rules and public pages can change, so check the sources directly.
 
 Related reading on this site: [Regulatory landscape](/regulatory-landscape-singapore) · [Definitions](/definitions) · [Supplement categories overview](/supplement-categories-overview) · [HSA supplement rules overview](/articles/11-hsa-regulation-overview)
 
