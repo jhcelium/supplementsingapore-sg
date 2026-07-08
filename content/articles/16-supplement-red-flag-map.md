@@ -1,5 +1,5 @@
 ---
-title: Supplement Red Flag Map
+title: Supplement Red Flags
 description: "A Singapore supplement red flag map for checking HSA rules, claims, VNS signals, labels, sellers, and when to pause before buying."
 primary_kw: supplement red flag map
 secondary_kws: ["Singapore supplement red flags", "HSA supplement checks", "supplement buyer checklist Singapore"]
@@ -9,7 +9,7 @@ dateModified: "2026-07-08"
 
 *Written by the Neoi - Health Supplements Singapore editorial team - Last updated: 8 July 2026*
 
-# Supplement Red Flag Map
+# Supplement Red Flags
 
 A supplement red flag map helps Singapore readers decide which public checks to make before comparing price, seller claims, or imported product listings. This article is educational information, not medical advice, and it does not decide whether any specific supplement is safe or suitable for you.
 
