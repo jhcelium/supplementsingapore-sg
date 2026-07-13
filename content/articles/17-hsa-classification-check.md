@@ -1,15 +1,15 @@
 ---
-title: HSA Classification Check
+title: HSA Classification
 description: "Use an HSA classification check to compare ingredients, dosage form, intended use, and presentation before routing a Singapore product question."
-primary_kw: HSA classification check
-secondary_kws: ["Singapore supplement classification", "CHP classification tool", "food health product classification"]
+primary_kw: HSA classification
+secondary_kws: ["HSA classification check", "CHP classification tool", "food health product classification"]
 datePublished: "2026-07-13"
 dateModified: "2026-07-13"
 ---
 
 *Written by the Neoi - Health Supplements Singapore editorial team - Last updated: 13 July 2026*
 
-# HSA Classification Check
+# HSA Classification
 
 An HSA classification check helps you organise a Singapore product question before deciding whether it belongs with health supplements, food, or another regulatory route. This guide explains the public tools and the information they require. It is educational information, not medical or legal advice, and it does not classify a specific product.
 
