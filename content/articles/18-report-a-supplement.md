@@ -9,8 +9,6 @@ dateModified: "2026-07-23"
 
 *Written by the Neoi - Health Supplements Singapore editorial team - Last updated: 23 July 2026*
 
-# Report a Supplement
-
 To report a supplement concern in Singapore, first separate an unwanted health event, a suspicious sale, an advertisement complaint, and a refund dispute. Each has a different route. This guide is educational information, not medical or legal advice, and it does not determine whether a product or seller has broken a rule.
 
 ## Match the concern to the correct route
