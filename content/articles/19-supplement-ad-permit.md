@@ -3,6 +3,7 @@ title: Supplement Ad Permit
 description: "Learn when a Singapore supplement advertisement may need an HSA permit, how classification changes the route, and which claim rules still apply."
 primary_kw: supplement ad permit
 secondary_kws: ["HSA supplement ad permit", "quasi-medicinal product advertising", "Singapore supplement advertisement"]
+date: "2026-07-28"
 datePublished: "2026-07-28"
 dateModified: "2026-07-28"
 ---
